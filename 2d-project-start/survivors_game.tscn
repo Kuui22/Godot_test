@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6wy1u7j3oegw"]
+[gd_scene load_steps=4 format=3 uid="uid://c6wy1u7j3oegw"]
 
 [ext_resource type="PackedScene" uid="uid://ccqvp7v3wrfu6" path="res://player.tscn" id="1_ts5ya"]
 [ext_resource type="PackedScene" uid="uid://rbs34u57e1hy" path="res://pine_tree.tscn" id="2_c4jlw"]
+[ext_resource type="PackedScene" uid="uid://cao6h8v5qixt" path="res://slime.tscn" id="3_pyr3d"]
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 offset_right = 1920.0
 offset_bottom = 1080.0
 
@@ -18,3 +22,6 @@ position = Vector2(1420, 190)
 
 [node name="Pine_tree2" parent="." instance=ExtResource("2_c4jlw")]
 position = Vector2(381, 675)
+
+[node name="Slime" parent="." instance=ExtResource("3_pyr3d")]
+position = Vector2(1222, 713)

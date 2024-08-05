@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var happy_boo:Node2D
-const SPEED:float = 300.0
+const SPEED:float = 600.0
 const JUMP_VELOCITY:float = -400.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
