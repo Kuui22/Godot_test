@@ -6,6 +6,7 @@ extends Node2D
 const SLIME:PackedScene = preload("res://slime.tscn")
 
 @onready var player = %Player
+@onready var expbar = %ExpBar
 
 func _ready():
 	mob = SLIME
@@ -23,5 +24,8 @@ func _on_player_health_depleted():
 	%GameOver.visible = true
 	get_tree().paused = true
 
-func _on_mob_killed(data):
+func _on_mob_killed(data,experience):
 	print(data)
+	expbar.value += experience
+	if expbar.value >= expbar.max_value:
+		get_tree().paused = true
