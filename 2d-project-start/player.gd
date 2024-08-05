@@ -5,6 +5,7 @@ signal health_depleted
 
 
 #stats
+var maxhealth:float = 100.0
 var health:float = 100.0
 const SPEED:float = 600.0
 const DAMAGE_RATE:float = 5.0
@@ -86,3 +87,8 @@ func wander_ai(delta):
 			if is_at_target_position():
 				state="IDLE"
 
+func level_up():
+	maxhealth += 20
+	%HealthBar.max_value= maxhealth
+	%HealthBar.value= maxhealth
+	health = maxhealth

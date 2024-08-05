@@ -54,4 +54,6 @@ func _on_mob_killed(data,experience,nmob):
 	expbar.value += experience
 	nmob.dead.disconnect(_on_mob_killed)
 	if expbar.value >= expbar.max_value:
-		get_tree().paused = true
+		#get_tree().paused = true
+		player.level_up()
+		expbar.value = 0
