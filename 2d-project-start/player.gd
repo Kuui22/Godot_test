@@ -1,6 +1,8 @@
 extends CharacterBody2D
 @export var happy_boo:Node2D
+@export var weapon:Area2D
 signal health_depleted
+
 
 #stats
 var health:float = 100.0
@@ -17,6 +19,7 @@ var max_x:float = 1
 var max_y:float = 1
 var start_position:Vector2 = global_position
 var target_position:Vector2 = global_position
+var enemies_in_range
 #var direction = Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
 
 func _physics_process(delta:float):
@@ -24,15 +27,18 @@ func _physics_process(delta:float):
 	if Input.is_anything_pressed():
 		var direction = Input.get_vector("move_left", "move_right","move_up","move_down")
 		velocity = direction * SPEED
+		state = "MOVING"
 	else:
-		match state:
-			"IDLE":
-				update_target_position()
-				state = "WANDER"
-			"WANDER":
-				accelerate_to_point(target_position, ACCELERATION*delta)
-				if is_at_target_position():
-					state="IDLE"
+		enemies_in_range = weapon.get_overlapping_bodies()
+		if enemies_in_range.size() > 0:
+			state = "FIGHT" 
+			velocity = Vector2.ZERO
+		else:
+			if state == "FIGHT" or state == "MOVING":
+				state="IDLE"
+				velocity = Vector2.ZERO
+			wander_ai(delta)
+		
 		
 	move_and_slide()
 	
@@ -68,3 +74,15 @@ func accelerate_to_point(point, acceleration_scalar):
 func accelerate(acceleration_vector):
 	velocity += acceleration_vector
 	velocity = velocity.limit_length(SPEED)
+
+#thanks to: https://forum.godotengine.org/t/making-an-ai-that-randomly-moves/18839
+func wander_ai(delta):
+	match state:
+		"IDLE":
+			update_target_position()
+			state = "WANDER"
+		"WANDER":
+			accelerate_to_point(target_position, ACCELERATION*delta)
+			if is_at_target_position():
+				state="IDLE"
+
