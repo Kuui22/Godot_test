@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6wy1u7j3oegw"]
+[gd_scene load_steps=6 format=3 uid="uid://c6wy1u7j3oegw"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_80vvg"]
 [ext_resource type="PackedScene" uid="uid://ccqvp7v3wrfu6" path="res://player.tscn" id="1_ts5ya"]
 [ext_resource type="PackedScene" uid="uid://rbs34u57e1hy" path="res://pine_tree.tscn" id="2_c4jlw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x62bu"]
+bg_color = Color(0.290196, 0.290196, 0.290196, 0.658824)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a85np"]
+bg_color = Color(0.775174, 0.545776, 0.308459, 1)
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
@@ -14,6 +20,16 @@ layer = -1
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 offset_right = 1920.0
 offset_bottom = 1080.0
+
+[node name="ExpBar" type="ProgressBar" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 560.0
+offset_top = 1020.0
+offset_right = 1160.0
+offset_bottom = 1050.0
+scale = Vector2(1.28, 1.28)
+theme_override_styles/background = SubResource("StyleBoxFlat_x62bu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_a85np")
 
 [node name="Player" parent="." instance=ExtResource("1_ts5ya")]
 unique_name_in_owner = true

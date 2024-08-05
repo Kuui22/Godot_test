@@ -17,8 +17,11 @@ func _on_spawn_timer_timeout():
 	var new_mob = mob.instantiate()
 	new_mob.global_position = player.global_position + mob_position
 	add_child(new_mob)
-
+	new_mob.dead.connect(_on_mob_killed)
 
 func _on_player_health_depleted():
 	%GameOver.visible = true
 	get_tree().paused = true
+
+func _on_mob_killed(data):
+	print(data)

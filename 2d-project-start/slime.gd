@@ -2,6 +2,7 @@ extends CharacterBody2D
 #@export var slime:Node2D
 var health:int = 3
 
+signal dead(data:String)
 
 @onready var player = get_node("/root/Game/Player")
 @onready var Slime = %Slime
@@ -27,8 +28,10 @@ func take_damage():
 	health -= 1
 	Slime.play_hurt()
 	if health <= 0:
+		dead.emit("Im dead")
 		queue_free()
 		const SMOKE_SCENE = preload("res://smoke_explosion/smoke_explosion.tscn")
 		var smoke = SMOKE_SCENE.instantiate()
 		get_parent().add_child(smoke)
 		smoke.global_position = global_position
+		

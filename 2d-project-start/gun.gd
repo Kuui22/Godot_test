@@ -3,10 +3,10 @@ extends Area2D
 @onready var static_position:float = rotation
 var reset_speed:float = 2.0
 
-
+var enemies_in_range
 
 func _physics_process(delta):
-	var enemies_in_range = get_overlapping_bodies()
+	enemies_in_range = get_overlapping_bodies()
 	if enemies_in_range.size() > 0:
 		var target_enemy = enemies_in_range.front()
 		look_at(target_enemy.global_position)
@@ -28,4 +28,5 @@ func shoot():
 
 
 func _on_timer_timeout():
-	shoot()
+	if enemies_in_range.size() > 0:
+		shoot()
