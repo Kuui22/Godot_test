@@ -1,20 +1,26 @@
 extends CharacterBody2D
 #@export var slime:Node2D
-var health = 3
+var health:int = 3
 
 
 @onready var player = get_node("/root/Game/Player")
 @onready var Slime = %Slime
-@export var DAMAGE = 5
+@export var DAMAGE:float = 5.0
 
+
+var target
 
 func _ready():
 	Slime.play_walk()
+	target = player
 
 
 func _physics_process(_delta):
-	var direction = global_position.direction_to(player.global_position)
-	velocity = direction * 300
+	if(target):
+		var direction = global_position.direction_to(target.global_position)
+		velocity = direction * 300
+	else:
+		pass
 	move_and_slide()
 
 func take_damage():

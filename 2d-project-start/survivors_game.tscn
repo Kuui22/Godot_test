@@ -1,11 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://c6wy1u7j3oegw"]
 
+[ext_resource type="Script" path="res://main.gd" id="1_80vvg"]
 [ext_resource type="PackedScene" uid="uid://ccqvp7v3wrfu6" path="res://player.tscn" id="1_ts5ya"]
 [ext_resource type="PackedScene" uid="uid://rbs34u57e1hy" path="res://pine_tree.tscn" id="2_c4jlw"]
-[ext_resource type="PackedScene" uid="uid://cao6h8v5qixt" path="res://slime.tscn" id="3_pyr3d"]
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_80vvg")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -15,6 +16,7 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 
 [node name="Player" parent="." instance=ExtResource("1_ts5ya")]
+unique_name_in_owner = true
 position = Vector2(369, 207)
 
 [node name="Pine_tree" parent="." instance=ExtResource("2_c4jlw")]
@@ -23,5 +25,39 @@ position = Vector2(1420, 190)
 [node name="Pine_tree2" parent="." instance=ExtResource("2_c4jlw")]
 position = Vector2(381, 675)
 
-[node name="Slime" parent="." instance=ExtResource("3_pyr3d")]
-position = Vector2(1222, 713)
+[node name="Mob_spawner" type="Node2D" parent="."]
+
+[node name="Spawn_timer" type="Timer" parent="Mob_spawner"]
+wait_time = 3.0
+autostart = true
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.631373)
+
+[node name="Label" type="Label" parent="GameOver/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -11.5
+offset_right = 43.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 150
+text = "Game Over"
+
+[connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
+[connection signal="timeout" from="Mob_spawner/Spawn_timer" to="." method="_on_spawn_timer_timeout"]
