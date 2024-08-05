@@ -26,7 +26,7 @@ func shoot():
 	
 	%ShootingPoint.add_child(new_bullet)
 
-
+#if there are enemies shoot
 func _on_timer_timeout():
 	if enemies_in_range.size() > 0:
 		shoot()

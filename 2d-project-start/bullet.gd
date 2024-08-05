@@ -13,7 +13,7 @@ func _physics_process(delta):
 	if travelled_distance>RANGE:
 		queue_free()
 
-
+#enemy hit
 func _on_body_entered(body):
 	queue_free()
 	if body.has_method("take_damage"):

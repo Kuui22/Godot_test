@@ -8,10 +8,16 @@ const SLIME:PackedScene = preload("res://slime.tscn")
 @onready var player = %Player
 @onready var expbar = %ExpBar
 
+#can change starting spawned mob
 func _ready():
 	mob = SLIME
 
-
+#spawn mobs
+'''
+connecting to new instantiated scene's signal
+#var new_thing = some_thing.instantiate()
+#new_thing.signal_name.connect(method_to_call)
+'''
 func _on_spawn_timer_timeout():
 	var mob_angle:float = randf_range(0.0, TAU)
 	var mob_position:Vector2 = Vector2(spawn_radius,0.0).rotated(mob_angle)
@@ -20,12 +26,15 @@ func _on_spawn_timer_timeout():
 	add_child(new_mob)
 	new_mob.dead.connect(_on_mob_killed)
 
+#player is dd
 func _on_player_health_depleted():
 	%GameOver.visible = true
 	get_tree().paused = true
 
-func _on_mob_killed(data,experience):
+#a mob spawned is dd
+func _on_mob_killed(data,experience,nmob):
 	print(data)
 	expbar.value += experience
+	nmob.dead.disconnect(_on_mob_killed)
 	if expbar.value >= expbar.max_value:
 		get_tree().paused = true

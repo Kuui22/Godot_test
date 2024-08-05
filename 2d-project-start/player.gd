@@ -22,7 +22,8 @@ func _physics_process(delta:float):
 		%HealthBar.value = health
 		if health <= 0.0:
 			health_depleted.emit()
-	
+
+#animations are more smooth in _process instead of _physics_process
 func _process(_delta):
 	#animation
 	if velocity.length() > 0.0:
