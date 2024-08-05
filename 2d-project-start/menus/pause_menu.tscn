@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://kq87x3ifjqyq"]
+
+[ext_resource type="Script" path="res://menus/pause_menu.gd" id="1_stbha"]
+
+[node name="Pause_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_stbha")
+
+[node name="Resume_button" type="Button" parent="."]
+layout_mode = 2
+offset_left = -35.0
+offset_top = -235.0
+offset_right = 35.0
+offset_bottom = -204.0
+text = "Resume"
+
+[node name="Exit_button" type="Button" parent="."]
+layout_mode = 2
+offset_left = -17.0
+offset_top = 80.0
+offset_right = 20.0
+offset_bottom = 111.0
+text = "Exit"
+
+[connection signal="pressed" from="Resume_button" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Exit_button" to="." method="_on_exit_button_pressed"]

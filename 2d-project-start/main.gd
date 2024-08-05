@@ -7,10 +7,27 @@ const SLIME:PackedScene = preload("res://slime.tscn")
 
 @onready var player = %Player
 @onready var expbar = %ExpBar
+@onready var pause_menu = %Pause
 
 #can change starting spawned mob
 func _ready():
 	mob = SLIME
+
+
+func _process(_delta):
+	if Input.is_action_just_pressed("pause"):
+		pause()
+		
+
+
+func pause():
+	if Engine.time_scale == 0:
+		Engine.time_scale = 1
+		pause_menu.visible = false
+	else:
+		Engine.time_scale = 0
+		pause_menu.visible = true
+
 
 #spawn mobs
 '''
