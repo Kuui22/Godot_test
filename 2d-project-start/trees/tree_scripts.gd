@@ -10,14 +10,12 @@ func gencheck_trees(player,tree_radius,tree_count,tree_scenes,parent):
 
 #get trees near player
 func get_trees_in_radius(center: Vector2, radius: float, parent):
-	var trees_within_radius = []
 	for child in parent.get_children():
 		if child is Node2D and "tree" in child.name:
 			var distance = child.global_position.distance_to(center)
 			if distance <= radius:
-				trees_within_radius.append(child)
-				break
-	return trees_within_radius
+				return[child]
+	return []
 
 func generate_random_trees(center: Vector2, radius: float, count: int,tree_scenes,parent):
 	for i in range(count):
