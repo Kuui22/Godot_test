@@ -8,11 +8,14 @@ signal health_depleted
 var maxhealth:float = 100.0
 var health:float = 100.0
 const SPEED:float = 600.0
+const MAX_AI_SPEED:float = 500.0
+const SPEEDFACTOR:float = 50
 const DAMAGE_RATE:float = 5.0
 const ACCELERATION = 300
 
 #random movement
 var state = "IDLE"
+const DAMPING:float = 0.5
 const TOLERANCE = 4.0
 var min_x:float = 1
 var min_y:float = 1
@@ -25,25 +28,31 @@ var enemies_in_range
 
 func _physics_process(delta:float):
 	#direction
-	if Input.is_anything_pressed():
+	if Input.is_anything_pressed():#player input
 		var direction = Input.get_vector("move_left", "move_right","move_up","move_down")
-		velocity = direction * SPEED
+		velocity = direction * SPEED * delta * SPEEDFACTOR
 		state = "MOVING"
-	else:
+	else:#check for enemies
 		enemies_in_range = weapon.get_overlapping_bodies()
-		if enemies_in_range.size() > 0:
-			state = "FIGHT" 
-			velocity = Vector2.ZERO
-		else:
+		if enemies_in_range.size() > 0:#there are enemies
+			state = "FIGHT"
+			#try to search a point with no enemies
+			var avg_enemy_position = Vector2.ZERO
+			for enemy in enemies_in_range:
+				avg_enemy_position += enemy.global_position
+			avg_enemy_position /= enemies_in_range.size()
+			#var direction_away = (global_position - avg_enemy_position).normalized()
+			accelerate_away_from_point(avg_enemy_position, ACCELERATION * delta)
+		else:#no enemies
 			if state == "FIGHT" or state == "MOVING":
 				state="IDLE"
-				velocity = Vector2.ZERO
+				velocity = velocity.move_toward(Vector2.ZERO, DAMPING * delta * SPEED)
 			wander_ai(delta)
 		
 		
 	move_and_slide()
 	
-	
+	#take damage from mobs
 	var overlapping_mobs = %HurtBox.get_overlapping_bodies()
 	if overlapping_mobs.size() > 0:
 		health -= DAMAGE_RATE * overlapping_mobs.size() * delta
@@ -59,22 +68,27 @@ func _process(_delta):
 	else:
 		happy_boo.play_idle_animation()
 
+#functions for wandering ai
 func update_target_position():
 	var target_vector = Vector2(randf_range(-32, 32), randf_range(-32, 32))
 	target_position = start_position + target_vector
 
 func is_at_target_position(): 
-	# Stop moving when at target +/- tolerance
+	#stop moving when at target +/- tolerance
 	return (target_position - global_position).length() < TOLERANCE
 
 func accelerate_to_point(point, acceleration_scalar):
 	var direction = (point - global_position).normalized()
 	var acceleration_vector = direction * acceleration_scalar
 	accelerate(acceleration_vector)
+func accelerate_away_from_point(point, acceleration_scalar):
+	var direction = (global_position - point ).normalized()
+	var acceleration_vector = direction * acceleration_scalar
+	accelerate(acceleration_vector)
 
 func accelerate(acceleration_vector):
 	velocity += acceleration_vector
-	velocity = velocity.limit_length(SPEED)
+	velocity = velocity.limit_length(MAX_AI_SPEED)
 
 #thanks to: https://forum.godotengine.org/t/making-an-ai-that-randomly-moves/18839
 func wander_ai(delta):

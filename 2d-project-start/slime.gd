@@ -9,6 +9,8 @@ signal dead(data:String,experience:int,scene)
 @export var DAMAGE:float = 5.0
 
 var target
+const SPEED:float = 300
+const SPEEDFACTOR:float = 50
 
 #can change base target here
 func _ready():
@@ -16,10 +18,10 @@ func _ready():
 	target = player
 
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	if(target):
 		var direction = global_position.direction_to(target.global_position)
-		velocity = direction * 300
+		velocity = direction * SPEED * delta * SPEEDFACTOR
 	else:
 		pass
 	move_and_slide()
