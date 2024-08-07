@@ -14,7 +14,7 @@ const DAMAGE_RATE:float = 5.0
 const ACCELERATION = 300
 
 #inventory
-
+@export var inventory:inv
 
 #random movement
 var state = "IDLE"
@@ -31,7 +31,7 @@ var enemies_in_range
 
 func _physics_process(delta:float):
 	#direction
-	if Input.is_anything_pressed():#player input
+	if Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_down"):#player input
 		var direction = Input.get_vector("move_left", "move_right","move_up","move_down")
 		velocity = direction * SPEED * delta * SPEEDFACTOR
 		state = "MOVING"

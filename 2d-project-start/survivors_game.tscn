@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6wy1u7j3oegw"]
+[gd_scene load_steps=9 format=3 uid="uid://c6wy1u7j3oegw"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_80vvg"]
 [ext_resource type="PackedScene" uid="uid://ccqvp7v3wrfu6" path="res://player.tscn" id="1_ts5ya"]
+[ext_resource type="PackedScene" uid="uid://bu61q1121smpi" path="res://inventory/inventory_ui.tscn" id="2_24e4r"]
 [ext_resource type="PackedScene" uid="uid://rbs34u57e1hy" path="res://pine_tree.tscn" id="2_c4jlw"]
+[ext_resource type="Resource" uid="uid://bi7hnu2t6dw5j" path="res://inventory/player_inv.tres" id="3_f0d5r"]
 [ext_resource type="PackedScene" uid="uid://kq87x3ifjqyq" path="res://menus/pause_menu.tscn" id="4_0gimr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x62bu"]
@@ -15,12 +17,16 @@ bg_color = Color(0.775174, 0.545776, 0.308459, 1)
 y_sort_enabled = true
 script = ExtResource("1_80vvg")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="Background" type="CanvasLayer" parent="."]
 layer = -1
 
-[node name="ColorRect" type="ColorRect" parent="UI"]
+[node name="ColorRect" type="ColorRect" parent="Background"]
 offset_right = 1920.0
 offset_bottom = 1080.0
+color = Color(0.601223, 0.601223, 0.601223, 1)
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 5
 
 [node name="ExpBar" type="ProgressBar" parent="UI"]
 unique_name_in_owner = true
@@ -32,9 +38,16 @@ scale = Vector2(1.28, 1.28)
 theme_override_styles/background = SubResource("StyleBoxFlat_x62bu")
 theme_override_styles/fill = SubResource("StyleBoxFlat_a85np")
 
+[node name="InventoryUI" parent="UI" instance=ExtResource("2_24e4r")]
+offset_left = 1494.0
+offset_top = 399.0
+offset_right = -356.0
+offset_bottom = -601.0
+
 [node name="Player" parent="." instance=ExtResource("1_ts5ya")]
 unique_name_in_owner = true
 position = Vector2(369, 207)
+inventory = ExtResource("3_f0d5r")
 
 [node name="Pine_tree" parent="." instance=ExtResource("2_c4jlw")]
 position = Vector2(1420, 190)
