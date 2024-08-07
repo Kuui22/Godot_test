@@ -3,7 +3,7 @@ extends Node2D
 
 @export var spawn_radius = 1000
 @export var mob:PackedScene
-const SLIME:PackedScene = preload("res://slime.tscn")
+const SLIME:PackedScene = preload("res://mobs/slime.tscn")
 var mobcounter:int = 0
 @export var tree_scenes: Dictionary = {
 	"pine_tree": preload("res://pine_tree.tscn"),

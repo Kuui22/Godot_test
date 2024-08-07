@@ -13,6 +13,9 @@ const SPEEDFACTOR:float = 50
 const DAMAGE_RATE:float = 5.0
 const ACCELERATION = 300
 
+#inventory
+
+
 #random movement
 var state = "IDLE"
 const DAMPING:float = 0.5

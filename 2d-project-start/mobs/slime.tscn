@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cao6h8v5qixt"]
 
 [ext_resource type="PackedScene" uid="uid://ogik4s70pgwl" path="res://characters/slime/slime.tscn" id="1_bje57"]
-[ext_resource type="Script" path="res://slime.gd" id="1_jujo1"]
+[ext_resource type="Script" path="res://mobs/slime.gd" id="1_usg45"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hq8m2"]
 radius = 52.0096
@@ -9,7 +9,7 @@ radius = 52.0096
 [node name="Slime" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 3
-script = ExtResource("1_jujo1")
+script = ExtResource("1_usg45")
 
 [node name="Slime" parent="." instance=ExtResource("1_bje57")]
 unique_name_in_owner = true

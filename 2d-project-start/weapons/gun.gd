@@ -20,7 +20,7 @@ func reset_position(delta):
 			rotation = lerp_angle(rotation, static_position, reset_speed*delta)
 			
 func shoot():
-	const BULLET = preload("res://bullet.tscn")
+	const BULLET = preload("res://attacks/bullet.tscn")
 	var new_bullet = BULLET.instantiate()
 	new_bullet.global_transform = %ShootingPoint.global_transform
 	
