@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://c6wy1u7j3oegw"]
+[gd_scene load_steps=11 format=3 uid="uid://c6wy1u7j3oegw"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_80vvg"]
 [ext_resource type="PackedScene" uid="uid://ccqvp7v3wrfu6" path="res://player.tscn" id="1_ts5ya"]
-[ext_resource type="PackedScene" uid="uid://bu61q1121smpi" path="res://inventory/inventory_ui.tscn" id="2_24e4r"]
-[ext_resource type="PackedScene" uid="uid://rbs34u57e1hy" path="res://pine_tree.tscn" id="2_c4jlw"]
-[ext_resource type="Resource" uid="uid://bi7hnu2t6dw5j" path="res://inventory/player_inv.tres" id="3_f0d5r"]
+[ext_resource type="Script" path="res://inventory/inventory_interface.gd" id="2_6sw62"]
+[ext_resource type="PackedScene" uid="uid://b30t60fakjpeg" path="res://inventory/inventory.tscn" id="2_kmp02"]
 [ext_resource type="PackedScene" uid="uid://kq87x3ifjqyq" path="res://menus/pause_menu.tscn" id="4_0gimr"]
+[ext_resource type="PackedScene" uid="uid://po151l7ef4mr" path="res://inventory/slot.tscn" id="4_mtk0o"]
+[ext_resource type="Resource" uid="uid://b3vet7spfthtr" path="res://inventory/test_inv.tres" id="4_pkap7"]
+[ext_resource type="PackedScene" uid="uid://c1c7g1dvftyni" path="res://objects/chest.tscn" id="5_bhx57"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x62bu"]
 bg_color = Color(0.290196, 0.290196, 0.290196, 0.658824)
@@ -38,22 +40,55 @@ scale = Vector2(1.28, 1.28)
 theme_override_styles/background = SubResource("StyleBoxFlat_x62bu")
 theme_override_styles/fill = SubResource("StyleBoxFlat_a85np")
 
-[node name="InventoryUI" parent="UI" instance=ExtResource("2_24e4r")]
-offset_left = 1494.0
-offset_top = 399.0
-offset_right = -356.0
-offset_bottom = -601.0
+[node name="InventoryInterface" type="Control" parent="UI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1329.0
+offset_top = 711.0
+offset_right = 1369.0
+offset_bottom = 751.0
+script = ExtResource("2_6sw62")
+
+[node name="PlayerInventory" parent="UI/InventoryInterface" instance=ExtResource("2_kmp02")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="ExternalInventory" parent="UI/InventoryInterface" instance=ExtResource("2_kmp02")]
+visible = false
+layout_mode = 0
+offset_left = -13.0
+offset_top = -367.0
+offset_right = 27.0
+offset_bottom = -327.0
+
+[node name="GrabbedSlot" parent="UI/InventoryInterface" instance=ExtResource("4_mtk0o")]
+visible = false
+modulate = Color(1, 1, 1, 0.552941)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+
+[node name="Chest" parent="." instance=ExtResource("5_bhx57")]
+position = Vector2(1030, 645)
 
 [node name="Player" parent="." instance=ExtResource("1_ts5ya")]
 unique_name_in_owner = true
 position = Vector2(369, 207)
-inventory = ExtResource("3_f0d5r")
-
-[node name="Pine_tree" parent="." instance=ExtResource("2_c4jlw")]
-position = Vector2(1420, 190)
-
-[node name="Pine_tree2" parent="." instance=ExtResource("2_c4jlw")]
-position = Vector2(381, 675)
+inventory_data = ExtResource("4_pkap7")
 
 [node name="Mob_spawner" type="Node2D" parent="."]
 

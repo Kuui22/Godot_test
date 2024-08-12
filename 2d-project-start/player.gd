@@ -2,8 +2,12 @@ extends CharacterBody2D
 @export var happy_boo:Node2D
 @export var weapon:Area2D
 signal health_depleted
+signal toggle_inventory()
 
 
+@onready var interact_range = $InteractRange
+var interactables = null
+var interacting:bool = false
 #stats
 var maxhealth:float = 100.0
 var health:float = 100.0
@@ -14,7 +18,7 @@ const DAMAGE_RATE:float = 5.0
 const ACCELERATION = 300
 
 #inventory
-@export var inventory:inv
+@export var inventory_data:InventoryData
 
 #random movement
 var state = "IDLE"
@@ -28,6 +32,10 @@ var start_position:Vector2 = global_position
 var target_position:Vector2 = global_position
 var enemies_in_range
 #var direction = Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
+
+
+func _ready():
+	PlayerManager.player = self
 
 func _physics_process(delta:float):
 	#direction
@@ -71,6 +79,14 @@ func _process(_delta):
 	else:
 		happy_boo.play_idle_animation()
 
+
+func _unhandled_input(_event):
+	if Input.is_action_just_pressed("inventory"):
+		toggle_inventory.emit()
+	if Input.is_action_just_pressed("interact"):
+		interact()
+
+
 #functions for wandering ai
 func update_target_position():
 	var target_vector = Vector2(randf_range(-32, 32), randf_range(-32, 32))
@@ -110,5 +126,17 @@ func level_up():
 	%HealthBar.value= maxhealth
 	health = maxhealth
 
-func collect(item):
-	inventory.insert(item)
+func interact() -> void:
+	if(!interacting):
+		interactables = interact_range.get_overlapping_bodies()
+		if(interactables.size() > 0):
+			interactables[0].get_parent().player_interact()
+			interacting = true
+	elif(interactables):
+		interactables[0].get_parent().stop_player_interact()
+		interactables = null
+		interacting = false
+		
+
+#func collect(item):
+	#inventory.insert(item)

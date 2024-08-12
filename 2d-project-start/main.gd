@@ -1,6 +1,7 @@
 extends Node2D
 
 
+
 @export var spawn_radius = 1000
 @export var mob:PackedScene
 const SLIME:PackedScene = preload("res://mobs/slime.tscn")
@@ -15,19 +16,34 @@ var mobcounter:int = 0
 @onready var player = %Player
 @onready var expbar = %ExpBar
 @onready var pause_menu = %Pause
-
+@onready var inventory_interface = %InventoryInterface
 var trees = treefunctions.new()
 
 #can change starting spawned mob
 func _ready():
+	player.toggle_inventory.connect(toggle_inventory_interface)
 	mob = SLIME
 	trees.gencheck_trees(player,tree_radius,tree_count,tree_scenes,self)
+	inventory_interface.set_player_inventory_data(player.inventory_data)
+	inventory_interface.force_close.connect(toggle_inventory_interface)
+	#get all current external inventories
+	for node in get_tree().get_nodes_in_group("external_inventory"):
+		node.toggle_inventory.connect(toggle_inventory_interface)
 
 
-func _process(_delta):
+
+func _unhandled_input(_event):
 	if Input.is_action_just_pressed("pause"):
 		pause()
-		
+
+func toggle_inventory_interface(external_inventory_owner = null) -> void:
+	#this flips the value each time this is called
+	inventory_interface.visible = not inventory_interface.visible
+	
+	if external_inventory_owner: 
+		inventory_interface.set_external_inventory(external_inventory_owner)
+	else:
+		inventory_interface.clear_external_inventory()
 
 
 func pause():

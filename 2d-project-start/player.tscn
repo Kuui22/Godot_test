@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ccqvp7v3wrfu6"]
+[gd_scene load_steps=9 format=3 uid="uid://ccqvp7v3wrfu6"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_pg2w0"]
 [ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="1_qo1h0"]
@@ -15,6 +15,9 @@ bg_color = Color(0.27987, 0.250114, 0.263479, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q6fq0"]
 bg_color = Color(0.927034, 0.413118, 0.428731, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7b4or"]
+radius = 148.165
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("happy_boo", "weapon")]
 script = ExtResource("1_pg2w0")
@@ -54,3 +57,11 @@ theme_override_styles/background = SubResource("StyleBoxFlat_dh2v8")
 theme_override_styles/fill = SubResource("StyleBoxFlat_q6fq0")
 value = 100.0
 show_percentage = false
+
+[node name="InteractRange" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractRange"]
+shape = SubResource("CircleShape2D_7b4or")
+debug_color = Color(0.641503, 0.523901, 0.0214525, 0.42)

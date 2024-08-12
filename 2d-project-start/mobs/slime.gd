@@ -7,9 +7,9 @@ signal dead(data:String,experience:int,scene)
 @onready var player = get_node("/root/Game/Player")
 @onready var Slime = %Slime
 @export var DAMAGE:float = 5.0
-@export var drops:inv_item 
+#@export var drops:inv_item 
 
-const PICKUP_SCENE = preload("res://items/pickup.tscn")
+#const PICKUP_SCENE = preload("res://items/pickup.tscn")
 const SMOKE_SCENE = preload("res://smoke_explosion/smoke_explosion.tscn")
 
 var target
@@ -22,7 +22,7 @@ func _ready():
 	target = player
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if(target):
 		var direction = global_position.direction_to(target.global_position)
 		velocity = direction * SPEED 
@@ -37,14 +37,15 @@ func take_damage():
 	if health <= 0:
 		dead.emit("Im dead",experience,self)
 		queue_free()
-		call_deferred("death")
+		#call_deferred("death")
 			
 func death():
 	var smoke = SMOKE_SCENE.instantiate()
 	get_parent().add_child(smoke)
 	smoke.global_position = global_position
-	var loot = PICKUP_SCENE.instantiate()
-	loot.item = drops
+	#var loot = PICKUP_SCENE.instantiate()
+	var loot = ""
+	#loot.item = "drops"
 	get_parent().add_child(loot)
 	loot.global_position = global_position
 	
