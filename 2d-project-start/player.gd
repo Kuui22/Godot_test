@@ -7,8 +7,8 @@ signal health_depleted
 #stats
 var maxhealth:float = 100.0
 var health:float = 100.0
-const SPEED:float = 600.0
-const MAX_AI_SPEED:float = 500.0
+const SPEED:float = 500.0
+const MAX_AI_SPEED:float = 450.0
 const SPEEDFACTOR:float = 50
 const DAMAGE_RATE:float = 5.0
 const ACCELERATION = 300
@@ -33,7 +33,7 @@ func _physics_process(delta:float):
 	#direction
 	if Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_down"):#player input
 		var direction = Input.get_vector("move_left", "move_right","move_up","move_down")
-		velocity = direction * SPEED * delta * SPEEDFACTOR
+		velocity = direction * SPEED 
 		state = "MOVING"
 	else:#check for enemies
 		enemies_in_range = weapon.get_overlapping_bodies()
@@ -109,3 +109,6 @@ func level_up():
 	%HealthBar.max_value= maxhealth
 	%HealthBar.value= maxhealth
 	health = maxhealth
+
+func collect(item):
+	inventory.insert(item)
