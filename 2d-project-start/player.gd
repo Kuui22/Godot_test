@@ -137,6 +137,10 @@ func interact() -> void:
 		interactables = null
 		interacting = false
 		
+func get_drop_position() -> Vector2:
+	var dir = global_position
+	return dir+Vector2(60,60)
 
-#func collect(item):
-	#inventory.insert(item)
+
+func collect(item):
+	pass

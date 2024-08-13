@@ -1,6 +1,6 @@
 extends Node2D
 
-
+const PickUp = preload("res://items/pickup.tscn")
 
 @export var spawn_radius = 1000
 @export var mob:PackedScene
@@ -40,7 +40,7 @@ func toggle_inventory_interface(external_inventory_owner = null) -> void:
 	#this flips the value each time this is called
 	inventory_interface.visible = not inventory_interface.visible
 	
-	if external_inventory_owner: 
+	if external_inventory_owner and inventory_interface.visible: 
 		inventory_interface.set_external_inventory(external_inventory_owner)
 	else:
 		inventory_interface.clear_external_inventory()
@@ -89,3 +89,10 @@ func _on_mob_killed(data,experience,nmob):
 		expbar.value = 0
 
 
+
+
+func _on_inventory_interface_drop_slot_data(slot_data):
+	var pick_up = PickUp.instantiate()
+	pick_up.slot_data = slot_data
+	pick_up.global_position = player.get_drop_position()
+	add_child(pick_up)

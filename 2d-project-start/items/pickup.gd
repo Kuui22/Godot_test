@@ -8,17 +8,17 @@ extends Node
 #	set(value):
 #		item = value
 		
+@export var slot_data:SlotData
+
 
 var player = null
 
 func _ready():
 	#if item and item.texture:
 	#	sprite.texture = item.texture
-	pass
+	sprite.texture = slot_data.item_data.texture
 
 func _on_pickup_range_body_entered(body):
 	if body.has_method("collect"):
-		#print("Helloooo")
-		player = body
-		#player.collect(item)
-		queue_free()
+		if body.inventory_data.pick_up_slot_data(slot_data):
+			queue_free()

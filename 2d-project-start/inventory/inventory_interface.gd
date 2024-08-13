@@ -72,14 +72,15 @@ func update_grabbed_slot() -> void:
 
 
 func _on_gui_input(event):
+	print("here")
 	if event is InputEventMouseButton \
 		and event.is_pressed() \
 		and grabbed_slot_data:
-			
+		
 		match event.button_index:
 			MOUSE_BUTTON_LEFT:
 				drop_slot_data.emit(grabbed_slot_data)
-				#print("rompere il cazzo")
+				
 				grabbed_slot_data = null
 			MOUSE_BUTTON_RIGHT:
 				drop_slot_data.emit(grabbed_slot_data.create_single_slot_data())
@@ -89,9 +90,26 @@ func _on_gui_input(event):
 				
 		update_grabbed_slot()
 
-
 func _on_visibility_changed():
 	if not visible and grabbed_slot_data:
 		drop_slot_data.emit(grabbed_slot_data)
 		grabbed_slot_data = null
+		update_grabbed_slot()
+
+func _unhandled_input(event):
+	if event is InputEventMouseButton \
+		and event.is_pressed() \
+		and grabbed_slot_data:
+		print("here")
+		match event.button_index:
+			MOUSE_BUTTON_LEFT:
+				drop_slot_data.emit(grabbed_slot_data)
+				
+				grabbed_slot_data = null
+			MOUSE_BUTTON_RIGHT:
+				drop_slot_data.emit(grabbed_slot_data.create_single_slot_data())
+				if grabbed_slot_data.quantity < 1:
+					grabbed_slot_data = null
+				
+				
 		update_grabbed_slot()
