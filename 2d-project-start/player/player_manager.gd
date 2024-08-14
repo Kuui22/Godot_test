@@ -18,14 +18,15 @@ func initequip(inventory: InventoryData) -> void:
 func use_slot_data(slot_data: SlotData) -> void:
 	slot_data.item_data.use(player)
 #reminder to change item_data.defence into a dict or some shit with multiple values when using multiple values
+#thank you reminder you saved mah laif
 func equipped_item(item_data: ItemData) -> void:
 	if(item_data is ItemDataEquip):
-		player.equip(item_data.defence)
+		player.equip(item_data.stats)
 		statsupdated.emit()
 
 func unequipped_item(item_data: ItemData) -> void:
 	if(item_data is ItemDataEquip):
-		player.unequip(item_data.defence)
+		player.unequip(item_data.stats)
 		statsupdated.emit()
 #if equip inventory of that slot has already something then... else...
 func swap_equip(slot_data: SlotData) -> SlotData:

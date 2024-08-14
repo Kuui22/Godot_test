@@ -2,8 +2,13 @@ extends ItemData
 
 class_name ItemDataEquip
 
-@export var defence:int
-
+@export var stats: Dictionary= {
+	"MovementSpeed":0,
+	"MaxHealth":0,
+	"Defence":0,
+	"Attack":0,
+	"AttackSpeed":0.0
+}
 @export var eqslot:Slot
 
 

@@ -26,7 +26,7 @@ const DAMAGE_RATE:float = 5.0
 const ACCELERATION = 300
 
 @export var statsdict:Dictionary = {
-	"Speed":Stats.speed,
+	"MovementSpeed":Stats.speed,
 	"MaxHealth":100.0,
 	"Defence":0,
 	"Attack":2,
@@ -60,14 +60,13 @@ var enemies_in_range
 
 func _ready():
 	PlayerManager.player = self
-	currentweapon.damage = statsdict['Attack']
-	currentweapon.timer.wait_time = statsdict['AttackSpeed']
+	updateweapon()
 
 func _physics_process(delta:float):
 	#direction
 	if Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_down"):#player input
 		var direction = Input.get_vector("move_left", "move_right","move_up","move_down")
-		velocity = direction * statsdict['Speed'] 
+		velocity = direction * statsdict['MovementSpeed'] 
 		state = "MOVING"
 	else:#check for enemies
 		enemies_in_range = weapon.get_overlapping_bodies()
@@ -83,7 +82,7 @@ func _physics_process(delta:float):
 		else:#no enemies
 			if state == "FIGHT" or state == "MOVING":
 				state="IDLE"
-				velocity = velocity.move_toward(Vector2.ZERO, DAMPING * delta * statsdict['Speed'])
+				velocity = velocity.move_toward(Vector2.ZERO, DAMPING * delta * statsdict['MovementSpeed'])
 			wander_ai(delta)
 		
 		
@@ -166,15 +165,32 @@ func get_drop_position() -> Vector2:
 func collect(item):
 	pass
 
+func updateweapon():
+	currentweapon.damage = statsdict['Attack']
+	currentweapon.timer.wait_time = statsdict['AttackSpeed']
+	
+
 #playermanager
 #so why a dict? in the future instead of passing a single value pass a dict of the
 #attributes of the item: like defence + idk speed? and loop through them and add each to the statistics
 #so that we can have multistat items
-func equip(def_value:int) -> void:
-	statsdict['Defence'] += def_value
+func equip(stats:Dictionary) -> void:
+	for key in stats:
+		if statsdict.has(key):
+			if(key == "AttackSpeed"):
+				statsdict[key] -= stats[key]
+			else:
+				statsdict[key] += stats[key]
+	updateweapon()
 
-func unequip(def_value:int) -> void:
-	statsdict['Defence'] -= def_value
+func unequip(stats:Dictionary) -> void:
+	for key in stats:
+		if statsdict.has(key):
+			if(key == "AttackSpeed"):
+				statsdict[key] += stats[key]
+			else:
+				statsdict[key] -= stats[key]
+	updateweapon()
 
 func valueupdate(value:int) -> void:
 	valuesdict['Coins'] += value

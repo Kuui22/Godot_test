@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemDataEquip" load_steps=4 format=3 uid="uid://bng208mvf88tt"]
+
+[ext_resource type="Script" path="res://items/item_data_equip.gd" id="1_6xl7n"]
+[ext_resource type="Texture2D" uid="uid://c1av5t1bw0xpt" path="res://items/#1 - Transparent Icons.png" id="2_vm3ia"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7nicw"]
+atlas = ExtResource("2_vm3ia")
+region = Rect2(192, 224, 32, 32)
+
+[resource]
+script = ExtResource("1_6xl7n")
+stats = {
+"Attack": 1,
+"AttackSpeed": 0.1,
+"Defence": 1,
+"MaxHealth": 1,
+"MovementSpeed": 1
+}
+eqslot = 2
+name = "Leather armour"
+description = "aonna"
+stackable = false
+texture = SubResource("AtlasTexture_7nicw")
+sell_value = 5
