@@ -5,10 +5,7 @@ var reset_speed:float = 2.0
 var damage:int = 1
 var enemies_in_range
 @onready var timer = %Timer
-var attackspeed
 
-func _ready():
-	var attackspeed = timer.wait_time
 
 func _physics_process(delta):
 	enemies_in_range = get_overlapping_bodies()

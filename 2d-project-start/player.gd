@@ -29,7 +29,8 @@ const ACCELERATION = 300
 	"Speed":Stats.speed,
 	"MaxHealth":100.0,
 	"Defence":0,
-	"Attack":2
+	"Attack":2,
+	"AttackSpeed":1
 	}
 var coins:int 
 var diamonds:int
@@ -60,6 +61,7 @@ var enemies_in_range
 func _ready():
 	PlayerManager.player = self
 	currentweapon.damage = statsdict['Attack']
+	currentweapon.timer.wait_time = statsdict['AttackSpeed']
 
 func _physics_process(delta:float):
 	#direction
@@ -90,7 +92,7 @@ func _physics_process(delta:float):
 	#take damage from mobs
 	var overlapping_mobs = %HurtBox.get_overlapping_bodies()
 	if overlapping_mobs.size() > 0:
-		health -= DAMAGE_RATE * overlapping_mobs.size() * delta
+		health -= DAMAGE_RATE * overlapping_mobs.size() * delta *(1-statsdict['Defence']/100)
 		%HealthBar.value = health
 		if health <= 0.0:
 			health_depleted.emit()
