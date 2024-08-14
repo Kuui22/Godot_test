@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ehqf6r8hwy3f"]
+
+[node name="textstat" type="Label"]
+offset_right = 350.0
+offset_bottom = 40.0
+text = "Chi e' banjos"

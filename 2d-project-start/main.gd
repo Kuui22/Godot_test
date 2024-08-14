@@ -17,24 +17,45 @@ var mobcounter:int = 0
 @onready var expbar = %ExpBar
 @onready var pause_menu = %Pause
 @onready var inventory_interface = %InventoryInterface
+@onready var player_stats = %PlayerStats
 var trees = treefunctions.new()
 
 #can change starting spawned mob
 func _ready():
+	#player + inventory
 	player.toggle_inventory.connect(toggle_inventory_interface)
+	player_stats.populate_stats_ui(player.statsdict)
+	inventory_interface.set_player_inventory_data(player.inventory_data)
+	inventory_interface.set_equip_inventory_data(player.equip_inventory_data)
+	inventory_interface.force_close.connect(toggle_inventory_interface)
+	PlayerManager.statsupdated.connect(updatestats)
+	PlayerManager.equipupdated.connect(updateequip)
+	PlayerManager.initequip(player.equip_inventory_data)
+	
+	#objects
 	mob = SLIME
 	trees.gencheck_trees(player,tree_radius,tree_count,tree_scenes,self)
-	inventory_interface.set_player_inventory_data(player.inventory_data)
-	inventory_interface.force_close.connect(toggle_inventory_interface)
+	
+
+	
+	
 	#get all current external inventories
 	for node in get_tree().get_nodes_in_group("external_inventory"):
 		node.toggle_inventory.connect(toggle_inventory_interface)
 
-
-
 func _unhandled_input(_event):
 	if Input.is_action_just_pressed("pause"):
 		pause()
+	if Input.is_action_just_pressed("characterstats"):
+		toggle_stats_interface()
+		
+func updatestats(_x = null) -> void:
+	player_stats.update_stats_ui(player.statsdict)
+
+func updateequip(_x = null) -> void:
+	inventory_interface.set_equip_inventory_data(player.equip_inventory_data)
+
+
 
 func toggle_inventory_interface(external_inventory_owner = null) -> void:
 	#this flips the value each time this is called
@@ -44,7 +65,8 @@ func toggle_inventory_interface(external_inventory_owner = null) -> void:
 		inventory_interface.set_external_inventory(external_inventory_owner)
 	else:
 		inventory_interface.clear_external_inventory()
-
+func toggle_stats_interface() -> void:
+	player_stats.visible = not player_stats.visible
 
 func pause():
 	if Engine.time_scale == 0:
@@ -80,12 +102,13 @@ func _on_player_health_depleted():
 
 #a mob spawned is dd
 func _on_mob_killed(data,experience,nmob):
+	mobcounter-=1
 	print(data)
 	expbar.value += experience
 	nmob.dead.disconnect(_on_mob_killed)
 	if expbar.value >= expbar.max_value:
 		#get_tree().paused = true
-		player.level_up()
+		PlayerManager.level_up()
 		expbar.value = 0
 
 

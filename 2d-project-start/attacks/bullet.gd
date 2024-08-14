@@ -4,6 +4,9 @@ var travelled_distance = 0
 const SPEED = 1000
 const RANGE = 1500
 
+var damage:int = 1 
+
+
 func _physics_process(delta):
 	
 	var direction = Vector2.RIGHT.rotated(rotation)
@@ -17,4 +20,4 @@ func _physics_process(delta):
 func _on_body_entered(body):
 	queue_free()
 	if body.has_method("take_damage"):
-		body.take_damage()
+		body.take_damage(damage)

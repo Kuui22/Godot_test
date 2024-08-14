@@ -2,8 +2,13 @@ extends Area2D
 
 @onready var static_position:float = rotation
 var reset_speed:float = 2.0
-
+var damage:int = 1
 var enemies_in_range
+@onready var timer = %Timer
+var attackspeed
+
+func _ready():
+	var attackspeed = timer.wait_time
 
 func _physics_process(delta):
 	enemies_in_range = get_overlapping_bodies()
@@ -22,9 +27,11 @@ func reset_position(delta):
 func shoot():
 	const BULLET = preload("res://attacks/bullet.tscn")
 	var new_bullet = BULLET.instantiate()
+	new_bullet.damage = damage
 	new_bullet.global_transform = %ShootingPoint.global_transform
 	
 	%ShootingPoint.add_child(new_bullet)
+
 
 #if there are enemies shoot
 func _on_timer_timeout():

@@ -31,8 +31,8 @@ func _physics_process(_delta):
 	move_and_slide()
 
 #getting hit
-func take_damage():
-	health -= 1
+func take_damage(damage:int):
+	health -= damage
 	Slime.play_hurt()
 	if health <= 0:
 		dead.emit("Im dead",experience,self)

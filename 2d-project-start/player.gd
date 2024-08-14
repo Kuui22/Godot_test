@@ -8,17 +8,43 @@ signal toggle_inventory()
 @onready var interact_range = $InteractRange
 var interactables = null
 var interacting:bool = false
+
+@onready var healthbar = %HealthBar
+@onready var currentweapon = %Weapon
+
+
 #stats
+var Stats:Character = Character.new() :
+	get: return Stats
+	set(value):
+		Stats = value
+
 var maxhealth:float = 100.0
-var health:float = 100.0
-const SPEED:float = 500.0
+var health:float = Stats.health
+var speed:float = Stats.speed
+var defence:int = 0
+var attack:int = 2
 const MAX_AI_SPEED:float = 450.0
 const SPEEDFACTOR:float = 50
 const DAMAGE_RATE:float = 5.0
 const ACCELERATION = 300
 
+@export var statsdict:Dictionary = {
+	"Speed":speed,
+	"MaxHealth":maxhealth,
+	"Defence":defence
+	}
+var coins:int 
+var diamonds:int
+@export var valuesdict:Dictionary = {
+	"Coins":coins,
+	"Diamonds":diamonds
+	}
+
+
 #inventory
 @export var inventory_data:InventoryData
+@export var equip_inventory_data: InventoryDataEquip
 
 #random movement
 var state = "IDLE"
@@ -36,12 +62,13 @@ var enemies_in_range
 
 func _ready():
 	PlayerManager.player = self
+	currentweapon.damage = attack
 
 func _physics_process(delta:float):
 	#direction
 	if Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_down"):#player input
 		var direction = Input.get_vector("move_left", "move_right","move_up","move_down")
-		velocity = direction * SPEED 
+		velocity = direction * speed 
 		state = "MOVING"
 	else:#check for enemies
 		enemies_in_range = weapon.get_overlapping_bodies()
@@ -57,7 +84,7 @@ func _physics_process(delta:float):
 		else:#no enemies
 			if state == "FIGHT" or state == "MOVING":
 				state="IDLE"
-				velocity = velocity.move_toward(Vector2.ZERO, DAMPING * delta * SPEED)
+				velocity = velocity.move_toward(Vector2.ZERO, DAMPING * delta * speed)
 			wander_ai(delta)
 		
 		
@@ -120,11 +147,7 @@ func wander_ai(delta):
 			if is_at_target_position():
 				state="IDLE"
 
-func level_up():
-	maxhealth += 20
-	%HealthBar.max_value= maxhealth
-	%HealthBar.value= maxhealth
-	health = maxhealth
+
 
 func interact() -> void:
 	if(!interacting):
@@ -141,6 +164,21 @@ func get_drop_position() -> Vector2:
 	var dir = global_position
 	return dir+Vector2(60,60)
 
-
 func collect(item):
 	pass
+
+#playermanager
+#so why a dict? in the future instead of passing a single value pass a dict of the
+#attributes of the item: like defence + idk speed? and loop through them and add each to the statistics
+#so that we can have multistat items
+func equip(def_value:int) -> void:
+	defence += def_value
+	statsdict['Defence'] = defence
+
+func unequip(def_value:int) -> void:
+	defence -= def_value
+	statsdict['Defence'] = defence
+
+func valueupdate(value:int) -> void:
+	coins += value
+	valuesdict['Coins'] = coins

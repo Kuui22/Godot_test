@@ -22,7 +22,7 @@ radius = 148.165
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("happy_boo", "weapon")]
 script = ExtResource("1_pg2w0")
 happy_boo = NodePath("HappyBoo")
-weapon = NodePath("Gun")
+weapon = NodePath("Weapon")
 
 [node name="HappyBoo" parent="." instance=ExtResource("1_qo1h0")]
 scale = Vector2(0.7, 0.7)
@@ -32,8 +32,11 @@ scale = Vector2(0.7, 0.7)
 shape = SubResource("CircleShape2D_qfsau")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_speed = 1.0
+rotation_smoothing_speed = 1.0
 
-[node name="Gun" parent="." instance=ExtResource("3_rdkbn")]
+[node name="Weapon" parent="." instance=ExtResource("3_rdkbn")]
+unique_name_in_owner = true
 position = Vector2(0, -27)
 scale = Vector2(0.7, 0.7)
 

@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddk7c8n2s35mv"]
+
+[ext_resource type="Script" path="res://inventory/playerinventory.gd" id="1_b8k46"]
+
+[node name="Inventory" type="TabBar"]
+offset_right = 40.0
+offset_bottom = 40.0
+tab_count = 2
+clip_tabs = false
+tab_0/title = "Items"
+tab_1/title = "Equip"
+script = ExtResource("1_b8k46")
+
+[node name="ItemContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_top = 40.0
+offset_right = 40.0
+offset_bottom = 80.0
+
+[node name="MarginContainer" type="MarginContainer" parent="ItemContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Itemgrid" type="GridContainer" parent="ItemContainer/MarginContainer"]
+layout_mode = 2
+columns = 6
+
+[connection signal="tab_changed" from="." to="." method="_on_tab_changed"]
