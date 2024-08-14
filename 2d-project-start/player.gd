@@ -19,20 +19,17 @@ var Stats:Character = Character.new() :
 	set(value):
 		Stats = value
 
-var maxhealth:float = 100.0
 var health:float = Stats.health
-var speed:float = Stats.speed
-var defence:int = 0
-var attack:int = 2
 const MAX_AI_SPEED:float = 450.0
 const SPEEDFACTOR:float = 50
 const DAMAGE_RATE:float = 5.0
 const ACCELERATION = 300
 
 @export var statsdict:Dictionary = {
-	"Speed":speed,
-	"MaxHealth":maxhealth,
-	"Defence":defence
+	"Speed":Stats.speed,
+	"MaxHealth":100.0,
+	"Defence":0,
+	"Attack":2
 	}
 var coins:int 
 var diamonds:int
@@ -62,13 +59,13 @@ var enemies_in_range
 
 func _ready():
 	PlayerManager.player = self
-	currentweapon.damage = attack
+	currentweapon.damage = statsdict['Attack']
 
 func _physics_process(delta:float):
 	#direction
 	if Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_down"):#player input
 		var direction = Input.get_vector("move_left", "move_right","move_up","move_down")
-		velocity = direction * speed 
+		velocity = direction * statsdict['Speed'] 
 		state = "MOVING"
 	else:#check for enemies
 		enemies_in_range = weapon.get_overlapping_bodies()
@@ -84,7 +81,7 @@ func _physics_process(delta:float):
 		else:#no enemies
 			if state == "FIGHT" or state == "MOVING":
 				state="IDLE"
-				velocity = velocity.move_toward(Vector2.ZERO, DAMPING * delta * speed)
+				velocity = velocity.move_toward(Vector2.ZERO, DAMPING * delta * statsdict['Speed'])
 			wander_ai(delta)
 		
 		
@@ -172,13 +169,10 @@ func collect(item):
 #attributes of the item: like defence + idk speed? and loop through them and add each to the statistics
 #so that we can have multistat items
 func equip(def_value:int) -> void:
-	defence += def_value
-	statsdict['Defence'] = defence
+	statsdict['Defence'] += def_value
 
 func unequip(def_value:int) -> void:
-	defence -= def_value
-	statsdict['Defence'] = defence
+	statsdict['Defence'] -= def_value
 
 func valueupdate(value:int) -> void:
-	coins += value
-	valuesdict['Coins'] = coins
+	valuesdict['Coins'] += value

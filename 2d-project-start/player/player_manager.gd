@@ -52,11 +52,10 @@ func swap_equip(slot_data: SlotData) -> SlotData:
 	else:
 		return slot_data
 func level_up():
-	player.maxhealth += 20
-	player.healthbar.max_value= player.maxhealth
-	player.healthbar.value= player.maxhealth
-	player.health = player.maxhealth
-	player.statsdict['MaxHealth'] = player.maxhealth
+	player.statsdict['MaxHealth'] += 20
+	player.healthbar.max_value= player.statsdict['MaxHealth']
+	player.healthbar.value= player.statsdict['MaxHealth']
+	player.health = player.statsdict['MaxHealth']
 	statsupdated.emit()
 
 

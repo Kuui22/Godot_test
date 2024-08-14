@@ -1,7 +1,7 @@
 extends CharacterBody2D
 #@export var slime:Node2D
 var health:int = 3
-var experience:int = 5
+var experience:int = 10
 signal dead(data:String,experience:int,scene)
 
 @onready var player = get_node("/root/Game/Player")
