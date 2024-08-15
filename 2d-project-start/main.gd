@@ -31,6 +31,7 @@ func _ready():
 	PlayerManager.statsupdated.connect(updatestats)
 	PlayerManager.equipupdated.connect(updateequip)
 	PlayerManager.initequip(player.equip_inventory_data)
+	PlayerManager.openmenu.connect(open_menus)
 	
 	#objects
 	mob = SLIME
@@ -111,11 +112,16 @@ func _on_mob_killed(data,experience,nmob):
 		PlayerManager.level_up()
 		expbar.value = 0
 
-
-
-
+#drop items
 func _on_inventory_interface_drop_slot_data(slot_data):
 	var pick_up = PickUp.instantiate()
 	pick_up.slot_data = slot_data
 	pick_up.global_position = player.get_drop_position()
 	add_child(pick_up)
+
+#open menus based on item used
+func open_menus(menu):
+	match menu:
+		"RANDOMIZER":
+			print("We got here")
+

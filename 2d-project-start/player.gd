@@ -162,7 +162,7 @@ func get_drop_position() -> Vector2:
 	var dir = global_position
 	return dir+Vector2(60,60)
 
-func collect(item):
+func collect(_item):
 	pass
 
 func updateweapon():

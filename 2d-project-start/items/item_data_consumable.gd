@@ -2,8 +2,21 @@ extends ItemData
 
 class_name ItemDataConsumable
 
-@export var heal_value: int
+@export var item_type:Type
 
-func use(target) -> void:
-	if heal_value != 0:
-		target.heal(heal_value)
+enum Type {
+	Healing,
+	StatBooster,
+	NOT
+}
+func use(_target) -> void:
+	match item_type:
+		0:
+			print("Healing")
+		1:
+			print("StatBooster")
+		2:
+			pass
+
+
+

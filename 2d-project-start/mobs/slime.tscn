@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://cao6h8v5qixt"]
+[gd_scene load_steps=6 format=3 uid="uid://cao6h8v5qixt"]
 
 [ext_resource type="PackedScene" uid="uid://ogik4s70pgwl" path="res://characters/slime/slime.tscn" id="1_bje57"]
 [ext_resource type="Script" path="res://mobs/slime.gd" id="1_usg45"]
+[ext_resource type="Texture2D" uid="uid://lw0484qojrh3" path="res://art/exclamationmark.png" id="3_pm11y"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ci57i"]
 radius = 50.0204
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_xni05"]
 
 [node name="Slime" type="CharacterBody2D"]
 collision_layer = 2
@@ -20,3 +23,11 @@ scale = Vector2(0.7, 0.7)
 position = Vector2(0, -23)
 scale = Vector2(0.7, 0.7)
 shape = SubResource("CircleShape2D_ci57i")
+
+[node name="BTPlayer" type="BTPlayer" parent="."]
+blackboard_plan = SubResource("BlackboardPlan_xni05")
+
+[node name="WarningSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(30, -83)
+texture = ExtResource("3_pm11y")

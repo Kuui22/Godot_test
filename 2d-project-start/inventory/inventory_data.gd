@@ -60,7 +60,9 @@ func use_slot_data(index: int) -> void:
 	if slot_data.item_data is ItemDataEquip:
 		var swap = PlayerManager.swap_equip(slot_data)
 		slot_datas[index] = swap
-		
+	if slot_data.item_data is ItemDataCrafting:
+		PlayerManager.use_slot_data(slot_data)
+	
 	print(slot_data.item_data.name)
 	
 	

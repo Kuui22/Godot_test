@@ -8,10 +8,8 @@ extends Node
 #	set(value):
 #		item = value
 		
-@export var slot_data:SlotData
+@export var slot_data:SlotData = SlotData.new()
 
-
-var player = null
 
 func _ready():
 	#if item and item.texture:

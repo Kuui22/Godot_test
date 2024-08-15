@@ -3,6 +3,8 @@ extends Node
 signal statsupdated()
 signal valuesupdated()
 signal equipupdated()
+signal openmenu(menu)
+
 
 var player
 var equip_inventory
@@ -17,6 +19,7 @@ func initequip(inventory: InventoryData) -> void:
 
 func use_slot_data(slot_data: SlotData) -> void:
 	slot_data.item_data.use(player)
+	
 #reminder to change item_data.defence into a dict or some shit with multiple values when using multiple values
 #thank you reminder you saved mah laif
 func equipped_item(item_data: ItemData) -> void:
@@ -35,15 +38,15 @@ func swap_equip(slot_data: SlotData) -> SlotData:
 		var targetslot = player.equip_inventory_data.slot_datas[equipslot]
 		if(targetslot):
 			#print("there's an equip already")
-			player.unequip(targetslot.item_data.defence)
-			player.equip(slot_data.item_data.defence)
+			player.unequip(targetslot.item_data.stats)
+			player.equip(slot_data.item_data.stats)
 			player.equip_inventory_data.slot_datas[equipslot] = slot_data
 			statsupdated.emit()
 			equipupdated.emit()
 			return targetslot
 		else:
 			#print("no equip in that slot")
-			player.equip(slot_data.item_data.defence)
+			player.equip(slot_data.item_data.stats)
 			player.equip_inventory_data.slot_datas[equipslot] = slot_data
 			statsupdated.emit()
 			equipupdated.emit()
@@ -66,3 +69,8 @@ func valuechange(value:String, amount:int) -> void:
 	
 func get_global_position() -> Vector2:
 	return player.global_position
+
+func open_menu(menu):
+	openmenu.emit(menu)
+
+

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemDataCrafting" load_steps=4 format=3 uid="uid://d1f4frsb2pg4v"]
+
+[ext_resource type="Script" path="res://items/item_data_crafting.gd" id="1_e6o2l"]
+[ext_resource type="Texture2D" uid="uid://c1av5t1bw0xpt" path="res://items/#1 - Transparent Icons.png" id="2_0t2w2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0m0n"]
+atlas = ExtResource("2_0t2w2")
+region = Rect2(0, 576, 32, 32)
+
+[resource]
+script = ExtResource("1_e6o2l")
+item_type = 0
+name = "RandShard"
+description = "Randomizes an item's stats"
+stackable = true
+texture = SubResource("AtlasTexture_n0m0n")
+sell_value = 0
