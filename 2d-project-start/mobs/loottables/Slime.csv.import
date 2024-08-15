@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://p80aq0400832"
+
+[deps]
+
+files=["res://mobs/loottables/Slime.ItemID.translation", "res://mobs/loottables/Slime.Weight.translation"]
+
+source_file="res://mobs/loottables/Slime.csv"
+dest_files=["res://mobs/loottables/Slime.ItemID.translation", "res://mobs/loottables/Slime.Weight.translation"]
+
+[params]
+
+compress=true
+delimiter=0

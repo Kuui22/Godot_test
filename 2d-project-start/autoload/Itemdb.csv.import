@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bafsr6mbhoj72"
+
+[deps]
+
+files=["res://autoload/Itemdb.Name.translation", "res://autoload/Itemdb.Category.translation", "res://autoload/Itemdb.File.translation"]
+
+source_file="res://autoload/Itemdb.csv"
+dest_files=["res://autoload/Itemdb.Name.translation", "res://autoload/Itemdb.Category.translation", "res://autoload/Itemdb.File.translation"]
+
+[params]
+
+compress=true
+delimiter=0

@@ -11,9 +11,10 @@ signal dead(data:String,experience:int,scene)
 
 const PICKUP_SCENE = preload("res://items/pickup.tscn")
 const SMOKE_SCENE = preload("res://smoke_explosion/smoke_explosion.tscn")
+const mob_name:String = "Slime"
 
-const apple = "res://items/food/apple.tres"
-const shard = "res://items/crafting/random_shard.tres"
+
+var loot_table
 
 var target
 const SPEED:float = 300
@@ -23,12 +24,13 @@ func movetotarget(targ,speed):
 	var direction = global_position.direction_to(targ.global_position)
 	velocity = direction * speed 
 
+	
 
 #can change base target here
 func _ready():
 	Slime.play_walk()
 	target = player
-
+	loot_table = ItemDB.get_loot_table(mob_name)
 
 func _physics_process(_delta):
 	if(target):
@@ -51,17 +53,27 @@ func death():
 	get_parent().add_child(smoke)
 	smoke.global_position = global_position
 	var loot = PICKUP_SCENE.instantiate()
-	loot.slot_data.item_data = possible_drops()
-	get_parent().add_child(loot)
-	loot.global_position = global_position
+	var drop = possible_drops()
+	if drop:
+		loot.slot_data.item_data = drop
+		get_parent().add_child(loot)
+		loot.global_position = global_position
+	else:
+		loot.queue_free()
 	
 func possible_drops():
-	var selector = randi_range(1,2)
-	var drop 
-	match selector:
-		1:
-			drop = preload(apple)
-		2:
-			drop = preload(shard)
-	
+	var total_weight = 0
+	var cumulative_weight = []
+	#var selector = randi_range(1,2)
+	#var drop = ItemDB.get_item(selector)
+	var drop
+	for i in loot_table:
+		total_weight += int(loot_table[i][2])
+		cumulative_weight.append([loot_table[i][1],total_weight])
+	var chance = randf_range(0,total_weight)
+	for i in cumulative_weight:
+		if chance< i[1]:
+			print(i)
+			drop = ItemDB.get_item(int(i[0]))
+			return drop
 	return drop
