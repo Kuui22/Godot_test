@@ -19,7 +19,7 @@ bg_color = Color(0.927034, 0.413118, 0.428731, 1)
 [sub_resource type="CircleShape2D" id="CircleShape2D_7b4or"]
 radius = 148.165
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("happy_boo", "weapon")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("happy_boo", "weapon") groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_pg2w0")
 happy_boo = NodePath("HappyBoo")
