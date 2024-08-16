@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cao6h8v5qixt"]
+[gd_scene load_steps=7 format=3 uid="uid://cao6h8v5qixt"]
 
 [ext_resource type="PackedScene" uid="uid://ogik4s70pgwl" path="res://characters/slime/slime.tscn" id="1_bje57"]
 [ext_resource type="Script" path="res://mobs/slime.gd" id="1_usg45"]
+[ext_resource type="BehaviorTree" uid="uid://c6lrg7ysnldsd" path="res://ai/trees/slime.tres" id="3_1lrle"]
 [ext_resource type="Texture2D" uid="uid://lw0484qojrh3" path="res://art/exclamationmark.png" id="3_pm11y"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ci57i"]
@@ -25,6 +26,7 @@ scale = Vector2(0.7, 0.7)
 shape = SubResource("CircleShape2D_ci57i")
 
 [node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("3_1lrle")
 blackboard_plan = SubResource("BlackboardPlan_xni05")
 
 [node name="WarningSprite" type="Sprite2D" parent="."]

@@ -24,12 +24,13 @@ func movetotarget(targ,speed):
 	var direction = global_position.direction_to(targ.global_position)
 	velocity = direction * speed 
 
-	
+func move(pos,speed):
+	velocity = global_position.direction_to(pos) * speed
 
 #can change base target here
 func _ready():
 	Slime.play_walk()
-	target = player
+	#target = player
 	loot_table = ItemDB.get_loot_table(mob_name)
 
 func _physics_process(_delta):

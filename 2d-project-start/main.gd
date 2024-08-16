@@ -2,7 +2,7 @@ extends Node2D
 
 const PickUp = preload("res://items/pickup.tscn")
 
-@export var spawn_radius = 1000
+@export var spawn_radius = 100
 @export var mob:PackedScene
 const SLIME:PackedScene = preload("res://mobs/slime.tscn")
 var mobcounter:int = 0
