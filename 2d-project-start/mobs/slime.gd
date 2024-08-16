@@ -12,14 +12,16 @@ signal dead(data:String,experience:int,scene)
 const PICKUP_SCENE = preload("res://items/pickup.tscn")
 const SMOKE_SCENE = preload("res://smoke_explosion/smoke_explosion.tscn")
 const mob_name:String = "Slime"
-const SPEED:float = 300
 
 #stats
 
 var health:int = 3
 var experience:int = 10
 @export var DAMAGE:float = 5.0
-
+@export var speed:float = 300.0
+@export var idle_speed:float = 200.0
+@export var tolerance:float = 10.0
+@export var targeting_range:float = 600.0
 #loot
 var loot_table
 
@@ -32,7 +34,7 @@ var current_idle_target_position:Vector2 = update_random_position()
 @export var min_range:float = 400.0
 @export var max_range:float = 1000.0
 
-
+@onready var idle_timer:Timer = $idle_timer
 
 
 func movetotarget(targ,speed):
@@ -45,18 +47,26 @@ func move(pos,speed):
 #can change base target here
 func _ready():
 	Slime.play_walk()
-	#target = player
+	target = player
 	loot_table = ItemDB.get_loot_table(mob_name)
 
 func _physics_process(_delta):
-	if(target):
-		movetotarget(target,SPEED)
+	# IF MOB HAS A TARGET AND TARGET IS IN RANGE
+	if(target and global_position.distance_to(target.global_position) < targeting_range ):
+		movetotarget(target,speed)
+		status == "FIGHTING"
 	else:
+		#IF MOB IS ALREADY IDLE MOVING TO A RANDOM PLACE
 		if(status == "RUNNING"):
 			status_check()
 		else:
-			current_idle_target_position = update_random_position()
-			status = "RUNNING"
+			#MOB WAITS (1 TO 3) SECONDS AND IDLE MOVES
+			if idle_timer.is_stopped():
+				idle_timer.wait_time = randf_range(1,3)
+				idle_timer.start()
+				await idle_timer.timeout
+				current_idle_target_position = update_random_position()
+				status = "RUNNING"
 	move_and_slide()
 
 #getting hit
@@ -98,10 +108,6 @@ func possible_drops():
 			return drop
 	return drop
 
-
-@export var speed:float = 300.0
-@export var tolerance:float = 10.0
-
 func status_check():
 	var target_pos:Vector2 = current_idle_target_position
 	var distance:float = global_position.distance_to(target_pos)
@@ -112,7 +118,7 @@ func status_check():
 		print("FINISHED")
 	
 	else:
-		move(target_pos,speed)
+		move(target_pos,idle_speed)
 		status = "RUNNING"
 		
 func update_random_position():

@@ -26,3 +26,7 @@ shape = SubResource("CircleShape2D_ci57i")
 visible = false
 position = Vector2(30, -83)
 texture = ExtResource("3_pm11y")
+
+[node name="idle_timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
