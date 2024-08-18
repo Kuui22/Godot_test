@@ -85,15 +85,25 @@ func get_player_inventory_equip(_inv):
 				reroll_shards = item
 				shard_amount = item.quantity
 	if old_inventory_equips:
+		print("it exists")
 		if old_inventory_equips == itemarray:
+			print("Inventory is the same")
 			if shard_amount == old_shard_amount:
+				print("Shards are the same")
 				return
 			else:
+				print("Different shards")
 				reroll_inventory.update_equiplist(itemarray,reroll_shards,true)
-		
+				old_shard_amount = shard_amount
+		else:
+			reroll_inventory.update_equiplist(itemarray,reroll_shards)
+			old_inventory_equips = itemarray
+			old_shard_amount = shard_amount
 	else:
 		reroll_inventory.update_equiplist(itemarray,reroll_shards)
 		old_inventory_equips = itemarray
+		old_shard_amount = shard_amount
+		
 func toggle_inventory_interface(external_inventory_owner = null) -> void:
 	#this flips the value each time this is called
 	inventory_interface.visible = not inventory_interface.visible
@@ -142,7 +152,7 @@ func _on_player_health_depleted():
 #a mob spawned is dd
 func _on_mob_killed(data,experience,nmob):
 	mobcounter-=1
-	print(data)
+	#print(data)
 	expbar.value += experience
 	nmob.dead.disconnect(_on_mob_killed)
 	if expbar.value >= expbar.max_value:

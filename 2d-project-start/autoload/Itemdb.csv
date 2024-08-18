@@ -4,3 +4,4 @@ ID,Name,Category,File
 3,leather_body_armour,equip,leather_body_armour.tres
 4,random_shard,crafting,random_shard.tres
 5,base_potion,consumable,base_potion.tres
+6,leather_helm,equip,leather_helmet.tres
