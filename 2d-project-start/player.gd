@@ -19,7 +19,7 @@ var Stats:Character = Character.new() :
 	set(value):
 		Stats = value
 
-var health:float = Stats.health
+var currenthealth:float = Stats.currenthealth
 const MAX_AI_SPEED:float = 450.0
 const SPEEDFACTOR:float = 50
 const DAMAGE_RATE:float = 5.0
@@ -27,10 +27,10 @@ const ACCELERATION = 300
 
 @export var statsdict:Dictionary = {
 	"MovementSpeed":Stats.speed,
-	"MaxHealth":100.0,
-	"Defence":0,
-	"Attack":2,
-	"AttackSpeed":1
+	"MaxHealth":Stats.maxhealth,
+	"Defence":Stats.defence,
+	"Attack":Stats.attack,
+	"AttackSpeed":Stats.baseattackspeed
 	}
 var coins:int 
 var diamonds:int
@@ -95,12 +95,12 @@ func _physics_process(delta:float):
 	#take damage from mobs
 	var overlapping_mobs = %HurtBox.get_overlapping_bodies()
 	if overlapping_mobs.size() > 0:
-		health -= DAMAGE_RATE * overlapping_mobs.size() * delta *(1-statsdict['Defence']/100)
-		%HealthBar.value = health
-		if health <= 0.0:
+		currenthealth -= DAMAGE_RATE * overlapping_mobs.size() * delta *(1-statsdict['Defence']/100)
+		%HealthBar.value = currenthealth
+		if currenthealth <= 0.0:
 			health_depleted.emit()
 
-#animations are more smooth in _process instead of _physics_process
+#animations are more smooth in _process instead of _physics_process? or so they told me
 func _process(_delta):
 	#animation
 	if velocity.length() > 0.0:
@@ -118,7 +118,7 @@ func _unhandled_input(_event):
 
 #functions for wandering ai
 func update_target_position():
-	var target_vector = Vector2(randf_range(-32, 32), randf_range(-32, 32))
+	var target_vector = Vector2(randf_range(-64, 64), randf_range(-64, 64))
 	target_position = start_position + target_vector
 
 func is_at_target_position(): 

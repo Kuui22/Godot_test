@@ -30,3 +30,12 @@ enum Slot {
 	Charm,
 	NOT
 }
+func _init():
+	_update_description()
+
+# Function to dynamically update the description based on stats
+func _update_description() -> void:
+	description = "Stats:\n"
+	for stat in stats.keys():
+		if stats[stat] != 0:
+			description += str(stat) + ": " + str(stats[stat]) + "\n"

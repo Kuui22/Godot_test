@@ -59,7 +59,7 @@ func level_up():
 	player.statsdict['MaxHealth'] += 20
 	player.healthbar.max_value= player.statsdict['MaxHealth']
 	player.healthbar.value= player.statsdict['MaxHealth']
-	player.health = player.statsdict['MaxHealth']
+	player.currenthealth = player.statsdict['MaxHealth']
 	statsupdated.emit()
 
 

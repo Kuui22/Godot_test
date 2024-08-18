@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c6wy1u7j3oegw"]
+[gd_scene load_steps=22 format=3 uid="uid://c6wy1u7j3oegw"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_80vvg"]
 [ext_resource type="PackedScene" uid="uid://ccqvp7v3wrfu6" path="res://player.tscn" id="1_ts5ya"]
@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://b3vet7spfthtr" path="res://inventory/test_inv.tres" id="4_pkap7"]
 [ext_resource type="PackedScene" uid="uid://c1c7g1dvftyni" path="res://objects/chest.tscn" id="5_bhx57"]
 [ext_resource type="PackedScene" path="res://menus/player_stats.tscn" id="6_1aipv"]
+[ext_resource type="PackedScene" uid="uid://qyt235ws8rqn" path="res://menus/crafting_menu.tscn" id="7_trso8"]
 [ext_resource type="Script" path="res://inventory/inventory_data_equip.gd" id="9_5rrrq"]
 [ext_resource type="PackedScene" uid="uid://vqwo2x387eft" path="res://items/pickup.tscn" id="9_ity6n"]
 [ext_resource type="Resource" uid="uid://dhdadkp42er86" path="res://items/food/apple.tres" id="10_ccrdk"]
@@ -20,6 +21,10 @@ bg_color = Color(0.290196, 0.290196, 0.290196, 0.658824)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a85np"]
 bg_color = Color(0.775174, 0.545776, 0.308459, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5a6tp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_afkg6"]
 
 [sub_resource type="Resource" id="Resource_1rq5m"]
 script = ExtResource("9_5rrrq")
@@ -105,10 +110,10 @@ offset_bottom = 64.0
 [node name="PlayerStats" parent="UI" instance=ExtResource("6_1aipv")]
 unique_name_in_owner = true
 visible = false
-offset_left = 4.0
-offset_top = 608.0
-offset_right = 304.0
-offset_bottom = 958.0
+offset_left = 100.0
+offset_top = 700.0
+offset_right = 400.0
+offset_bottom = 1050.0
 
 [node name="AutoMode" type="CheckButton" parent="UI"]
 anchors_preset = 1
@@ -117,7 +122,17 @@ anchor_right = 1.0
 offset_left = -138.0
 offset_bottom = 31.0
 grow_horizontal = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5a6tp")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_afkg6")
 text = "Auto Mode:"
+
+[node name="CraftingMenu" parent="UI" instance=ExtResource("7_trso8")]
+unique_name_in_owner = true
+visible = false
+offset_left = 100.0
+offset_top = 200.0
+offset_right = -1080.0
+offset_bottom = -350.0
 
 [node name="Chest" parent="." instance=ExtResource("5_bhx57")]
 position = Vector2(1030, 645)

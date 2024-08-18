@@ -1,0 +1,89 @@
+[gd_scene load_steps=5 format=3 uid="uid://cg28uhswu3w72"]
+
+[ext_resource type="Texture2D" uid="uid://i4cjdwy1kcoj" path="res://icon.png" id="1_2mpff"]
+[ext_resource type="Script" path="res://menus/reroll_inventory.gd" id="1_byn51"]
+[ext_resource type="Texture2D" uid="uid://cw108ey368mel" path="res://art/leftarrow.png" id="3_txiuc"]
+[ext_resource type="Texture2D" uid="uid://d256w480erbjs" path="res://art/rightarrow.png" id="4_aonmr"]
+
+[node name="RerollInventory" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1180.0
+offset_bottom = -550.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_byn51")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemTexture" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_2mpff")
+
+[node name="LeftButton" type="TextureButton" parent="Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -100.0
+offset_right = 40.0
+offset_bottom = 100.0
+grow_vertical = 2
+texture_normal = ExtResource("3_txiuc")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="RightButton" type="TextureButton" parent="Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -100.0
+offset_bottom = 100.0
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = ExtResource("4_aonmr")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -77.0
+offset_right = 77.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "REROLL INVENTORY"
+
+[connection signal="pressed" from="Control/LeftButton" to="." method="_on_left_button_pressed"]
+[connection signal="pressed" from="Control/RightButton" to="." method="_on_right_button_pressed"]

@@ -20,6 +20,10 @@ var mobcounter:int = 0
 @onready var player_stats = %PlayerStats
 var trees = treefunctions.new()
 
+
+@onready var crafting_menu: Control = %CraftingMenu
+@onready var reroll_inventory: Control = crafting_menu.get_node("TabContainer/RerollInventory")
+
 #can change starting spawned mob
 func _ready():
 	#player + inventory
@@ -37,18 +41,20 @@ func _ready():
 	mob = SLIME
 	trees.gencheck_trees(player,tree_radius,tree_count,tree_scenes,self)
 	
-
-	
+	get_player_inventory_equip()
 	
 	#get all current external inventories
 	for node in get_tree().get_nodes_in_group("external_inventory"):
 		node.toggle_inventory.connect(toggle_inventory_interface)
+		
 
-func _unhandled_input(_event):
+func _unhandled_key_input(_event):
 	if Input.is_action_just_pressed("pause"):
 		pause()
 	if Input.is_action_just_pressed("characterstats"):
 		toggle_stats_interface()
+	if Input.is_action_just_pressed("craftingmenu"):
+		toggle_crafting_interface()
 		
 func updatestats(_x = null) -> void:
 	player_stats.update_stats_ui(player.statsdict)
@@ -56,7 +62,14 @@ func updatestats(_x = null) -> void:
 func updateequip(_x = null) -> void:
 	inventory_interface.set_equip_inventory_data(player.equip_inventory_data)
 
-
+func get_player_inventory_equip():
+	var itemarray:Array[SlotData] = []
+	for item in player.inventory_data.slot_datas:
+		if item:
+			if item.item_data is ItemDataEquip:
+				print(item.item_data.name)
+				itemarray.append(item)
+	reroll_inventory.update_equiplist(itemarray)
 
 func toggle_inventory_interface(external_inventory_owner = null) -> void:
 	#this flips the value each time this is called
@@ -68,6 +81,8 @@ func toggle_inventory_interface(external_inventory_owner = null) -> void:
 		inventory_interface.clear_external_inventory()
 func toggle_stats_interface() -> void:
 	player_stats.visible = not player_stats.visible
+func toggle_crafting_interface() -> void:
+	crafting_menu.visible = not crafting_menu.visible
 
 func pause():
 	if Engine.time_scale == 0:
@@ -123,7 +138,8 @@ func _on_inventory_interface_drop_slot_data(slot_data):
 func open_menus(menu):
 	match menu:
 		"RANDOMIZER":
-			print("We got here")
+			crafting_menu.visible = true
+			pass
 
 
 func _on_auto_mode_pressed() -> void:
