@@ -82,8 +82,8 @@ func _physics_process(delta):
 		apply_strong_repulsion()
 		current_idle_target_position = update_random_position()
 
-func is_stuck(previous_position, delta):
-	var distance_moved = global_position.distance_to(previous_position)
+func is_stuck(prev_pos, delta):
+	var distance_moved = global_position.distance_to(prev_pos)
 	if distance_moved < movement_threshold:
 		stuck_timer += delta
 		if stuck_timer >= stuck_time_threshold:

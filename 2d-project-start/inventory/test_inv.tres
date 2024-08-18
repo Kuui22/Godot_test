@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="InventoryData" load_steps=13 format=3 uid="uid://b3vet7spfthtr"]
+[gd_resource type="Resource" script_class="InventoryData" load_steps=15 format=3 uid="uid://b3vet7spfthtr"]
 
 [ext_resource type="Script" path="res://inventory/inventory_data.gd" id="1_231u1"]
 [ext_resource type="Resource" uid="uid://dhdadkp42er86" path="res://items/food/apple.tres" id="2_2fon5"]
 [ext_resource type="Script" path="res://inventory/slot_data.gd" id="3_06n6u"]
 [ext_resource type="Resource" uid="uid://d2qjijso07kox" path="res://items/misc/blue_book.tres" id="4_4r24j"]
 [ext_resource type="Resource" uid="uid://bng208mvf88tt" path="res://items/equip/leather_body_armour.tres" id="4_rchjw"]
+[ext_resource type="Resource" uid="uid://mcdjopf4k2jx" path="res://items/equip/leather_helmet.tres" id="5_si5iu"]
 [ext_resource type="Resource" uid="uid://dir1jjkbm6c81" path="res://items/consumable/base_potion.tres" id="6_pfnb3"]
 [ext_resource type="Resource" uid="uid://d1f4frsb2pg4v" path="res://items/crafting/random_shard.tres" id="7_mkotb"]
 
@@ -16,6 +17,11 @@ quantity = 12
 [sub_resource type="Resource" id="Resource_wdebd"]
 script = ExtResource("3_06n6u")
 item_data = ExtResource("4_rchjw")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_a1ty2"]
+script = ExtResource("3_06n6u")
+item_data = ExtResource("5_si5iu")
 quantity = 1
 
 [sub_resource type="Resource" id="Resource_mwb71"]
@@ -35,4 +41,4 @@ quantity = 5
 
 [resource]
 script = ExtResource("1_231u1")
-slot_datas = Array[ExtResource("3_06n6u")]([null, SubResource("Resource_vdmfi"), null, SubResource("Resource_wdebd"), null, null, SubResource("Resource_mwb71"), null, SubResource("Resource_jc0we"), null, SubResource("Resource_db8xt"), null])
+slot_datas = Array[ExtResource("3_06n6u")]([null, SubResource("Resource_vdmfi"), null, SubResource("Resource_wdebd"), SubResource("Resource_a1ty2"), null, SubResource("Resource_mwb71"), null, SubResource("Resource_jc0we"), null, SubResource("Resource_db8xt"), null])

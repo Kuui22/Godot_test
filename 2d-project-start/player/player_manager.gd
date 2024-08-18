@@ -10,11 +10,10 @@ var player
 var equip_inventory
 
 
-
 func initequip(inventory: InventoryData) -> void:
 	for slot_data in inventory.slot_datas:
 		if(slot_data and slot_data.item_data is ItemDataEquip):
-			player.equip(slot_data.item_data.defence)
+			player.equip(slot_data.item_data.stats)
 	statsupdated.emit()
 
 func use_slot_data(slot_data: SlotData) -> void:
@@ -77,3 +76,7 @@ func toggle_auto():
 	player.automode = not player.automode
 	if(player.automode):
 		player.update_target_position()
+
+
+func request_inventory_update():
+	player.inventory_data.inventory_updated.emit(player.inventory_data)

@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://cg28uhswu3w72"]
+[gd_scene load_steps=6 format=3 uid="uid://cg28uhswu3w72"]
 
 [ext_resource type="Texture2D" uid="uid://i4cjdwy1kcoj" path="res://icon.png" id="1_2mpff"]
 [ext_resource type="Script" path="res://menus/reroll_inventory.gd" id="1_byn51"]
 [ext_resource type="Texture2D" uid="uid://cw108ey368mel" path="res://art/leftarrow.png" id="3_txiuc"]
 [ext_resource type="Texture2D" uid="uid://d256w480erbjs" path="res://art/rightarrow.png" id="4_aonmr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fek3r"]
+font_size = 14
 
 [node name="RerollInventory" type="Control"]
 layout_mode = 3
@@ -18,17 +21,13 @@ script = ExtResource("1_byn51")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -100.0
-offset_right = 100.0
-offset_bottom = 100.0
+offset_left = -75.0
+offset_right = 75.0
+offset_bottom = 150.0
 grow_horizontal = 2
-grow_vertical = 2
 
 [node name="ItemTexture" type="TextureRect" parent="Control"]
 layout_mode = 1
@@ -37,22 +36,23 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -64.0
-offset_right = 64.0
-offset_bottom = 64.0
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_2mpff")
+expand_mode = 4
 
 [node name="LeftButton" type="TextureButton" parent="Control"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -100.0
+offset_top = -50.0
 offset_right = 40.0
-offset_bottom = 100.0
+offset_bottom = 50.0
 grow_vertical = 2
 texture_normal = ExtResource("3_txiuc")
 ignore_texture_size = true
@@ -66,15 +66,15 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -40.0
-offset_top = -100.0
-offset_bottom = 100.0
+offset_top = -50.0
+offset_bottom = 50.0
 grow_horizontal = 0
 grow_vertical = 2
 texture_normal = ExtResource("4_aonmr")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="."]
+[node name="Title" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -83,7 +83,41 @@ offset_left = -77.0
 offset_right = 77.0
 offset_bottom = 23.0
 grow_horizontal = 2
-text = "REROLL INVENTORY"
+text = "Reroll Equipment"
+
+[node name="ItemStatsLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -70.0
+offset_right = 200.0
+offset_bottom = 30.0
+grow_vertical = 2
+
+[node name="Currency_available" type="Label" parent="."]
+layout_mode = 0
+offset_top = 50.0
+offset_right = 40.0
+offset_bottom = 73.0
+text = "RShards:"
+label_settings = SubResource("LabelSettings_fek3r")
+
+[node name="RerollButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -100.0
+offset_right = 4.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Reroll!"
 
 [connection signal="pressed" from="Control/LeftButton" to="." method="_on_left_button_pressed"]
 [connection signal="pressed" from="Control/RightButton" to="." method="_on_right_button_pressed"]
+[connection signal="pressed" from="RerollButton" to="." method="_on_reroll_button_pressed"]

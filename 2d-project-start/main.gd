@@ -20,9 +20,14 @@ var mobcounter:int = 0
 @onready var player_stats = %PlayerStats
 var trees = treefunctions.new()
 
-
+#crafting variables
 @onready var crafting_menu: Control = %CraftingMenu
-@onready var reroll_inventory: Control = crafting_menu.get_node("TabContainer/RerollInventory")
+@onready var reroll_inventory: Control = crafting_menu.get_node("TabContainer/RerollEquip")
+
+var old_inventory_equips:Array[SlotData]
+var old_shard_amount:int
+
+
 
 #can change starting spawned mob
 func _ready():
@@ -37,11 +42,16 @@ func _ready():
 	PlayerManager.initequip(player.equip_inventory_data)
 	PlayerManager.openmenu.connect(open_menus)
 	
+	#crafting connections
+	player.inventory_data.inventory_updated.connect(get_player_inventory_equip)
+	PlayerManager.equipupdated.connect(get_player_inventory_equip)
+	get_player_inventory_equip("")
+	
 	#objects
 	mob = SLIME
 	trees.gencheck_trees(player,tree_radius,tree_count,tree_scenes,self)
 	
-	get_player_inventory_equip()
+	
 	
 	#get all current external inventories
 	for node in get_tree().get_nodes_in_group("external_inventory"):
@@ -62,15 +72,28 @@ func updatestats(_x = null) -> void:
 func updateequip(_x = null) -> void:
 	inventory_interface.set_equip_inventory_data(player.equip_inventory_data)
 
-func get_player_inventory_equip():
+func get_player_inventory_equip(_inv):
 	var itemarray:Array[SlotData] = []
+	var reroll_shards:SlotData
+	var shard_amount:int
 	for item in player.inventory_data.slot_datas:
 		if item:
 			if item.item_data is ItemDataEquip:
 				print(item.item_data.name)
 				itemarray.append(item)
-	reroll_inventory.update_equiplist(itemarray)
-
+			elif item.item_data.name == "RandShard":
+				reroll_shards = item
+				shard_amount = item.quantity
+	if old_inventory_equips:
+		if old_inventory_equips == itemarray:
+			if shard_amount == old_shard_amount:
+				return
+			else:
+				reroll_inventory.update_equiplist(itemarray,reroll_shards,true)
+		
+	else:
+		reroll_inventory.update_equiplist(itemarray,reroll_shards)
+		old_inventory_equips = itemarray
 func toggle_inventory_interface(external_inventory_owner = null) -> void:
 	#this flips the value each time this is called
 	inventory_interface.visible = not inventory_interface.visible

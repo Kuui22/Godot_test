@@ -186,9 +186,13 @@ func get_drop_position() -> Vector2:
 func collect(_item):
 	pass
 
+#TODO: FIX ME LATER
 func updateweapon():
 	currentweapon.damage = statsdict['Attack']
-	currentweapon.timer.wait_time = statsdict['AttackSpeed']
+	if(statsdict['AttackSpeed'] > 0.1):
+		currentweapon.timer.wait_time = statsdict['AttackSpeed']
+	else:
+		currentweapon.timer.wait_time = 0.1
 	
 
 #playermanager

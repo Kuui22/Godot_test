@@ -27,7 +27,6 @@ const Slot = preload("res://inventory/slot.tscn")
 @onready var inventory = $"."
 
 
-
 func set_inventory_data(inventory_data: InventoryData) -> void:
 	if(!inventory_data.inventory_updated.is_connected(populate_item_grid)):
 		inventory_data.inventory_updated.connect(populate_item_grid)
@@ -49,6 +48,7 @@ func populate_item_grid(inventory_data: InventoryData) -> void:
 		#if not null
 		if(slot_data):
 			slot.set_slot_data(slot_data)
-
+	
+	
 func changetabs() -> void:
 	pass

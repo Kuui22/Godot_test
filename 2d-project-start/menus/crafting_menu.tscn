@@ -25,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 current_tab = 0
 
-[node name="RerollInventory" parent="TabContainer" instance=ExtResource("1_0ycfd")]
+[node name="RerollEquip" parent="TabContainer" instance=ExtResource("1_0ycfd")]
 layout_mode = 2
 metadata/_tab_index = 0
 

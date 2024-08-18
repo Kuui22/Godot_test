@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemDataEquip" load_steps=4 format=3 uid="uid://mcdjopf4k2jx"]
+
+[ext_resource type="Script" path="res://items/item_data_equip.gd" id="1_s37gn"]
+[ext_resource type="Texture2D" uid="uid://c1av5t1bw0xpt" path="res://items/#1 - Transparent Icons.png" id="2_1gih4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5iwrk"]
+atlas = ExtResource("2_1gih4")
+region = Rect2(64, 224, 32, 32)
+
+[resource]
+script = ExtResource("1_s37gn")
+stats = {
+"Attack": 0,
+"AttackSpeed": 0.0,
+"Defence": 5,
+"MaxHealth": 0,
+"MovementSpeed": 0
+}
+eqslot = 0
+name = "Leather_helm"
+description = "awooga"
+stackable = false
+texture = SubResource("AtlasTexture_5iwrk")
+sell_value = 5
