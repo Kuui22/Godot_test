@@ -120,7 +120,10 @@ func death():
 	var loot = PICKUP_SCENE.instantiate()
 	var drop = possible_drops()
 	if drop:
-		loot.slot_data.item_data = drop
+		if drop is ItemDataEquip: #equip needs to be duplicated or stats are shared
+			loot.slot_data.item_data = drop.duplicate()
+		else: #other stuff no or it won't stack
+			loot.slot_data.item_data = drop
 		get_parent().add_child(loot)
 		loot.global_position = global_position
 	else:

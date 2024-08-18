@@ -44,7 +44,7 @@ func _ready():
 	
 	#crafting connections
 	player.inventory_data.inventory_updated.connect(get_player_inventory_equip)
-	PlayerManager.equipupdated.connect(get_player_inventory_equip)
+	#PlayerManager.equipupdated.connect(get_player_inventory_equip)
 	get_player_inventory_equip("")
 	
 	#objects
