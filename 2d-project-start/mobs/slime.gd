@@ -21,7 +21,7 @@ var experience:int = 10
 @export var speed:float = 300.0
 @export var idle_speed:float = 200.0
 @export var tolerance:float = 10.0
-@export var targeting_range:float = 100.0
+@export var targeting_range:float = 500.0
 #loot
 var loot_table
 
@@ -165,4 +165,3 @@ func update_random_position():
 	var movement_vector:Vector2 = Vector2(randf_range(-min_range, max_range), randf_range(-min_range, max_range))
 	var final_position:Vector2 = global_position + movement_vector
 	return final_position
-

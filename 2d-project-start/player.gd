@@ -44,6 +44,7 @@ var diamonds:int
 @export var inventory_data:InventoryData
 @export var equip_inventory_data: InventoryDataEquip
 
+var automode:bool = false
 #random movement
 var state = "IDLE"
 const DAMPING:float = 0.5
@@ -55,7 +56,11 @@ var max_y:float = 1
 var start_position:Vector2 = global_position
 var target_position:Vector2 = global_position
 var enemies_in_range
-#var direction = Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
+#movement stuck variables
+var stuck_time:float = 0.0
+var stuck_threshold:float = 2.0 #movement 
+var stuck_timeout:float = 2.0 #time
+var previous_position:Vector2
 
 
 func _ready():
@@ -69,23 +74,22 @@ func _physics_process(delta:float):
 		velocity = direction * statsdict['MovementSpeed'] 
 		state = "MOVING"
 	else:#check for enemies
-		enemies_in_range = weapon.get_overlapping_bodies()
-		if enemies_in_range.size() > 0:#there are enemies
-			state = "FIGHT"
-			#try to search a point with no enemies
-			var avg_enemy_position = Vector2.ZERO
-			for enemy in enemies_in_range:
-				avg_enemy_position += enemy.global_position
-			avg_enemy_position /= enemies_in_range.size()
-			#var direction_away = (global_position - avg_enemy_position).normalized()
-			accelerate_away_from_point(avg_enemy_position, ACCELERATION * delta)
-		else:#no enemies
-			if state == "FIGHT" or state == "MOVING":
-				state="IDLE"
-				velocity = velocity.move_toward(Vector2.ZERO, DAMPING * delta * statsdict['MovementSpeed'])
-			wander_ai(delta)
+		if(automode):
+			enemies_in_range = weapon.get_overlapping_bodies()
+			if enemies_in_range.size() > 0:#there are enemies
+				state = "FIGHT"
+				fight_ai(delta)
+			else:#no enemies
+				if state == "FIGHT" or state == "MOVING":
+					state="IDLE"
+					velocity = velocity.move_toward(Vector2.ZERO, DAMPING * delta * statsdict['MovementSpeed'])
+				if ai_is_stuck(delta):
+					state = "IDLE"
+				wander_ai(delta)
+		else:
+			velocity = Vector2.ZERO * 0
 		
-		
+	previous_position = global_position
 	move_and_slide()
 	
 	#take damage from mobs
@@ -145,6 +149,23 @@ func wander_ai(delta):
 			if is_at_target_position():
 				state="IDLE"
 
+func fight_ai(delta):
+	#try to search a point with no enemies
+	var avg_enemy_position = Vector2.ZERO
+	for enemy in enemies_in_range:
+		avg_enemy_position += enemy.global_position
+	avg_enemy_position /= enemies_in_range.size()
+	#var direction_away = (global_position - avg_enemy_position).normalized()
+	accelerate_away_from_point(avg_enemy_position, ACCELERATION * delta)
+
+func ai_is_stuck(delta):
+	var distance_moved = global_position.distance_to(previous_position)
+	if distance_moved < stuck_threshold:
+		stuck_time += delta
+		#print(stuck_time)
+	else:
+		stuck_time = 0.0
+	return stuck_time >= stuck_timeout
 
 
 func interact() -> void:

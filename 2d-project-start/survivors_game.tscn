@@ -48,11 +48,16 @@ layer = 5
 
 [node name="ExpBar" type="ProgressBar" parent="UI"]
 unique_name_in_owner = true
-offset_left = 430.0
-offset_top = 1020.0
-offset_right = 1030.0
-offset_bottom = 1050.0
-scale = Vector2(1.28, 1.28)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -40.0
+offset_right = 400.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_styles/background = SubResource("StyleBoxFlat_x62bu")
 theme_override_styles/fill = SubResource("StyleBoxFlat_a85np")
 
@@ -104,6 +109,15 @@ offset_left = 4.0
 offset_top = 608.0
 offset_right = 304.0
 offset_bottom = 958.0
+
+[node name="AutoMode" type="CheckButton" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -138.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "Auto Mode:"
 
 [node name="Chest" parent="." instance=ExtResource("5_bhx57")]
 position = Vector2(1030, 645)
@@ -173,5 +187,6 @@ slot_data = SubResource("Resource_eptdi")
 
 [connection signal="drop_slot_data" from="UI/InventoryInterface" to="." method="_on_inventory_interface_drop_slot_data"]
 [connection signal="gui_input" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_gui_input"]
+[connection signal="pressed" from="UI/AutoMode" to="." method="_on_auto_mode_pressed"]
 [connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="Mob_spawner/Spawn_timer" to="." method="_on_spawn_timer_timeout"]

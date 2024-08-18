@@ -17,6 +17,3 @@ func use(_target) -> void:
 			print("StatBooster")
 		2:
 			pass
-
-
-

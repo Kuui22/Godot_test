@@ -5,8 +5,8 @@
 [node name="Inventory" type="TabBar"]
 offset_right = 40.0
 offset_bottom = 40.0
-tab_count = 2
 clip_tabs = false
+tab_count = 2
 tab_0/title = "Items"
 tab_1/title = "Equip"
 script = ExtResource("1_b8k46")

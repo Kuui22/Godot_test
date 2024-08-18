@@ -73,4 +73,7 @@ func get_global_position() -> Vector2:
 func open_menu(menu):
 	openmenu.emit(menu)
 
-
+func toggle_auto():
+	player.automode = not player.automode
+	if(player.automode):
+		player.update_target_position()

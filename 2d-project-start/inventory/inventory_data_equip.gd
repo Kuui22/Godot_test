@@ -51,4 +51,3 @@ func grab_slot_data(index:int) -> SlotData:
 		return super.grab_slot_data(index)
 	else:
 		return null
-

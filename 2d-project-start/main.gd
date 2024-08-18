@@ -125,3 +125,6 @@ func open_menus(menu):
 		"RANDOMIZER":
 			print("We got here")
 
+
+func _on_auto_mode_pressed() -> void:
+	PlayerManager.toggle_auto()
