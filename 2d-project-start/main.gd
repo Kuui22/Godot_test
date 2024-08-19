@@ -17,7 +17,6 @@ var mobcounter:int = 0
 @onready var pause_menu = %Pause
 @onready var inventory_interface = %InventoryInterface
 @onready var player_stats = %PlayerStats
-var trees = treefunctions.new()
 
 #crafting variables
 @onready var crafting_menu: Control = %CraftingMenu
@@ -49,7 +48,7 @@ func _ready():
 	
 	#objects
 	mob = SLIME
-	trees.gencheck_trees(player,tree_radius,tree_count,tree_scenes,self)
+	TreeFunctions.check_and_generate_trees(player,tree_radius,tree_count,tree_scenes,self)
 	
 	
 	
@@ -126,7 +125,7 @@ func pause():
 		pause_menu.visible = true
 
 func _on_tree_timer_timeout():#every x seconds as timer check if it has to generate trees
-	trees.gencheck_trees(player,tree_radius,tree_count,tree_scenes,self)
+	TreeFunctions.gencheck_trees(player,tree_radius,tree_count,tree_scenes,self)
 	
 #spawn mobs
 '''

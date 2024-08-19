@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c6wy1u7j3oegw"]
+[gd_scene load_steps=18 format=3 uid="uid://c6wy1u7j3oegw"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_80vvg"]
 [ext_resource type="PackedScene" uid="uid://ccqvp7v3wrfu6" path="res://player.tscn" id="1_ts5ya"]
@@ -13,8 +13,6 @@
 [ext_resource type="PackedScene" path="res://menus/player_stats.tscn" id="6_1aipv"]
 [ext_resource type="PackedScene" uid="uid://qyt235ws8rqn" path="res://menus/crafting_menu.tscn" id="7_trso8"]
 [ext_resource type="Script" path="res://inventory/inventory_data_equip.gd" id="9_5rrrq"]
-[ext_resource type="PackedScene" uid="uid://vqwo2x387eft" path="res://items/pickup.tscn" id="9_ity6n"]
-[ext_resource type="Resource" uid="uid://dhdadkp42er86" path="res://items/food/apple.tres" id="10_ccrdk"]
 [ext_resource type="Script" path="res://inventory/slot_data.gd" id="11_35wwf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5a6tp"]
@@ -24,11 +22,6 @@
 [sub_resource type="Resource" id="Resource_1rq5m"]
 script = ExtResource("9_5rrrq")
 slot_datas = Array[ExtResource("11_35wwf")]([null, null, null, null])
-
-[sub_resource type="Resource" id="Resource_eptdi"]
-script = ExtResource("11_35wwf")
-item_data = ExtResource("10_ccrdk")
-quantity = 1
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
@@ -178,10 +171,6 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-
-[node name="Pickup" parent="." instance=ExtResource("9_ity6n")]
-position = Vector2(1201, 332)
-slot_data = SubResource("Resource_eptdi")
 
 [connection signal="drop_slot_data" from="UI/InventoryInterface" to="." method="_on_inventory_interface_drop_slot_data"]
 [connection signal="gui_input" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_gui_input"]
