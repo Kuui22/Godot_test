@@ -9,6 +9,12 @@ signal openmenu(menu)
 var player
 var equip_inventory
 
+#xp constants
+# Current formula  XP_required=a×Level2+b×Level+c
+const xpconstA = 10
+const xpconstB = 10
+const xpconstC = 10
+
 
 func initequip(inventory: InventoryData) -> void:
 	for slot_data in inventory.slot_datas:
@@ -54,12 +60,24 @@ func swap_equip(slot_data: SlotData) -> SlotData:
 		#print(player.equip_inventory_data.slot_datas[0].item_data.name)
 	else:
 		return slot_data
-func level_up():
+		
+
+func set_xp_bar(expbar,value:int = 0):
+	var level = player.statsdict['Level']
+	expbar.value = value
+	expbar.max_value = xpconstA*level^2*xpconstB*level*xpconstC
+	expbar.level = level
+
+func level_up(expbar):
+	player.statsdict['Level'] += 1
 	player.statsdict['MaxHealth'] += 20
 	player.healthbar.max_value= player.statsdict['MaxHealth']
 	player.healthbar.value= player.statsdict['MaxHealth']
 	player.currenthealth = player.statsdict['MaxHealth']
+	set_xp_bar(expbar)
 	statsupdated.emit()
+	
+
 
 
 func valuechange(value:String, amount:int) -> void:

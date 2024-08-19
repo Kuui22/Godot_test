@@ -2,7 +2,7 @@ extends Resource
 class_name Character
 
 
-
+var level:int = 1
 @export var speed:float = 500.0
 var maxhealth:float = 100.0
 var currenthealth:float = 100.0

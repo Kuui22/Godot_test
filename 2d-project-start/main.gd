@@ -41,6 +41,7 @@ func _ready():
 	PlayerManager.equipupdated.connect(updateequip)
 	PlayerManager.initequip(player.equip_inventory_data)
 	PlayerManager.openmenu.connect(open_menus)
+	PlayerManager.set_xp_bar(expbar)
 	
 	#crafting connections
 	player.inventory_data.inventory_updated.connect(get_player_inventory_equip)
@@ -157,8 +158,7 @@ func _on_mob_killed(data,experience,nmob):
 	nmob.dead.disconnect(_on_mob_killed)
 	if expbar.value >= expbar.max_value:
 		#get_tree().paused = true
-		PlayerManager.level_up()
-		expbar.value = 0
+		PlayerManager.level_up(expbar)
 
 #drop items
 func _on_inventory_interface_drop_slot_data(slot_data):
