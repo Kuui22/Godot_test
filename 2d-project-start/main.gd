@@ -1,7 +1,6 @@
 extends Node2D
 
 const PickUp = preload("res://items/pickup.tscn")
-
 @export var spawn_radius = 1800
 @export var mob:PackedScene
 const SLIME:PackedScene = preload("res://mobs/slime.tscn")
@@ -139,7 +138,7 @@ func _on_spawn_timer_timeout():
 	mobcounter+=1
 	var mob_angle:float = randf_range(0.0, TAU)
 	var mob_position:Vector2 = Vector2(spawn_radius,0.0).rotated(mob_angle)
-	var new_mob = mob.instantiate()
+	var new_mob = MobContainer.spawn_mob(1,"slime")
 	new_mob.global_position = player.global_position + mob_position
 	new_mob.name = "slime_%d" % mobcounter
 	add_child(new_mob)

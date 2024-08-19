@@ -24,7 +24,7 @@ const MAX_AI_SPEED:float = 450.0
 const SPEEDFACTOR:float = 50
 const DAMAGE_RATE:float = 5.0
 const ACCELERATION = 300
-
+const defence_multiplier:float = 0.05
 
 @export var statsdict:Dictionary = {
 	"Level":Stats.level,
@@ -97,7 +97,7 @@ func _physics_process(delta:float):
 	#take damage from mobs
 	var overlapping_mobs = %HurtBox.get_overlapping_bodies()
 	if overlapping_mobs.size() > 0:
-		currenthealth -= DAMAGE_RATE * overlapping_mobs.size() * delta *(1-statsdict['Defence']/100)
+		currenthealth -= DAMAGE_RATE * overlapping_mobs.size() * delta /(1+statsdict['Defence']*defence_multiplier)
 		%HealthBar.value = currenthealth
 		if currenthealth <= 0.0:
 			health_depleted.emit()
