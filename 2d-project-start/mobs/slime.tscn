@@ -30,3 +30,5 @@ texture = ExtResource("3_pm11y")
 [node name="idle_timer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="Check_distance_timer" type="Timer" parent="."]

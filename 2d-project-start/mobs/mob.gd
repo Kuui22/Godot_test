@@ -29,7 +29,7 @@ var status: String = "IDLE"
 var lastdistance:float = 0
 var stuckcounter:int = 0
 @onready var idle_timer:Timer = $idle_timer
-
+@onready var distance_timer:Timer = $Check_distance_timer
 var stuck_time_threshold:float = 1.0  # Time in seconds before considering the slime "stuck"
 var stuck_timer:float = 0.0
 var previous_position = Vector2.ZERO  
@@ -49,6 +49,10 @@ func _ready():
 		min_movement_range = mob_data.min_movement_range
 		max_movement_range = mob_data.max_movement_range
 		loot_table = mob_data.loot_table
+		
+	distance_timer.start()
+	distance_timer.wait_time = 10
+	distance_timer.timeout.connect(despawn_check)
 
 func movetotarget(targ,spd):
 	var direction = global_position.direction_to(targ.global_position)
@@ -141,3 +145,10 @@ func update_random_position():
 	var movement_vector:Vector2 = Vector2(randf_range(-min_movement_range, max_movement_range), randf_range(-min_movement_range, max_movement_range))
 	var final_position:Vector2 = global_position + movement_vector
 	return final_position		
+
+
+func despawn_check():
+	var distance = global_position.distance_squared_to(PlayerManager.get_global_position()) 
+	if(distance > 10000000):
+		print("Distance is:"+str(distance)+",Despawining")
+		queue_free()

@@ -1,7 +1,7 @@
 extends Node2D
 
 const PickUp = preload("res://items/pickup.tscn")
-@export var spawn_radius = 1800
+@export var spawn_radius = 1200
 @export var mob:PackedScene
 const SLIME:PackedScene = preload("res://mobs/slime.tscn")
 var mobcounter:int = 0
@@ -84,14 +84,14 @@ func get_player_inventory_equip(_inv):
 				reroll_shards = item
 				shard_amount = item.quantity
 	if old_inventory_equips:
-		print("it exists")
+		#print("it exists")
 		if old_inventory_equips == itemarray:
-			print("Inventory is the same")
+			#print("Inventory is the same")
 			if shard_amount == old_shard_amount:
-				print("Shards are the same")
+				#print("Shards are the same")
 				return
 			else:
-				print("Different shards")
+				#print("Different shards")
 				reroll_inventory.update_equiplist(itemarray,reroll_shards,true)
 				old_shard_amount = shard_amount
 		else:

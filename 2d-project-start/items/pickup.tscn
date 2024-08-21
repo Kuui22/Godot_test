@@ -20,4 +20,6 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pickup_range"]
 shape = SubResource("CircleShape2D_a6u64")
 
+[node name="Check_distance_timer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="pickup_range" to="." method="_on_pickup_range_body_entered"]

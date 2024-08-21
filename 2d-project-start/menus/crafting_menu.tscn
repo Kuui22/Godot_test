@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://qyt235ws8rqn"]
+[gd_scene load_steps=6 format=3 uid="uid://qyt235ws8rqn"]
 
 [ext_resource type="Script" path="res://menus/crafting_menu.gd" id="1_0rmx0"]
 [ext_resource type="PackedScene" uid="uid://cg28uhswu3w72" path="res://menus/reroll_inventory.tscn" id="1_0ycfd"]
-[ext_resource type="Texture2D" uid="uid://c0ivfitmckfdn" path="res://art/exit.png" id="2_qyqvj"]
+[ext_resource type="Texture2D" uid="uid://uqll8apc1lge" path="res://art/ui/top.png" id="2_0jad6"]
+[ext_resource type="Texture2D" uid="uid://c0ivfitmckfdn" path="res://art/ui/exit.png" id="2_qyqvj"]
+[ext_resource type="Texture2D" uid="uid://cvy6fcwbdaf1w" path="res://art/ui/behind.png" id="3_dl15x"]
 
 [node name="CraftingMenu" type="Control"]
 layout_mode = 3
@@ -15,7 +17,85 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0rmx0")
 
+[node name="TextureContainer" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Behind" type="TextureRect" parent="TextureContainer"]
+self_modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -10.0
+offset_right = 480.0
+offset_bottom = 460.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_dl15x")
+
+[node name="Top" type="TextureRect" parent="TextureContainer"]
+self_modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 460.0
+offset_bottom = 33.0
+grow_horizontal = 2
+texture = ExtResource("2_0jad6")
+
+[node name="Bottom" type="TextureRect" parent="TextureContainer"]
+self_modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = 427.0
+offset_right = 480.0
+offset_bottom = 460.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("2_0jad6")
+
+[node name="Left" type="TextureRect" parent="TextureContainer"]
+self_modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 500.0
+offset_right = 460.0
+offset_bottom = 500.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.5708
+texture = ExtResource("2_0jad6")
+
+[node name="Right" type="TextureRect" parent="TextureContainer"]
+self_modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 420.0
+offset_top = 500.0
+offset_right = 920.0
+offset_bottom = 500.0
+grow_horizontal = 0
+grow_vertical = 2
+rotation = -1.5708
+texture = ExtResource("2_0jad6")
+
 [node name="TabContainer" type="TabContainer" parent="."]
+self_modulate = Color(1, 1, 1, 0)
 clip_contents = true
 layout_mode = 1
 anchors_preset = 15
@@ -39,11 +119,13 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 40.0
+offset_left = -34.0
+offset_bottom = 32.0
 grow_horizontal = 0
 texture_normal = ExtResource("2_qyqvj")
 ignore_texture_size = true
 stretch_mode = 0
 
+[connection signal="gui_input" from="TabContainer" to="." method="_on_tab_container_gui_input"]
+[connection signal="tab_hovered" from="TabContainer" to="." method="_on_tab_container_tab_hovered"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

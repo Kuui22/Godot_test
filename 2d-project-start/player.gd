@@ -120,8 +120,8 @@ func _unhandled_input(_event):
 
 #functions for wandering ai
 func update_target_position():
-	var target_vector = Vector2(randf_range(-64, 64), randf_range(-64, 64))
-	target_position = start_position + target_vector
+	var target_vector = Vector2(randf_range(-512, 512), randf_range(-512, 512))
+	target_position = previous_position + target_vector
 
 func is_at_target_position(): 
 	#stop moving when at target +/- tolerance

@@ -2,11 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://i4cjdwy1kcoj" path="res://icon.png" id="1_2mpff"]
 [ext_resource type="Script" path="res://menus/reroll_inventory.gd" id="1_byn51"]
-[ext_resource type="Texture2D" uid="uid://cw108ey368mel" path="res://art/leftarrow.png" id="3_txiuc"]
-[ext_resource type="Texture2D" uid="uid://d256w480erbjs" path="res://art/rightarrow.png" id="4_aonmr"]
+[ext_resource type="Texture2D" uid="uid://cw108ey368mel" path="res://art/ui/leftarrow.png" id="3_txiuc"]
+[ext_resource type="Texture2D" uid="uid://d256w480erbjs" path="res://art/ui/rightarrow.png" id="4_aonmr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fek3r"]
-font_size = 14
 
 [node name="RerollInventory" type="Control"]
 layout_mode = 3
@@ -90,15 +89,17 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
+offset_left = 40.0
 offset_top = -70.0
-offset_right = 200.0
-offset_bottom = 30.0
+offset_right = 240.0
+offset_bottom = 120.0
 grow_vertical = 2
 
 [node name="Currency_available" type="Label" parent="."]
 layout_mode = 0
+offset_left = 40.0
 offset_top = 50.0
-offset_right = 40.0
+offset_right = 100.0
 offset_bottom = 73.0
 text = "RShards:"
 label_settings = SubResource("LabelSettings_fek3r")

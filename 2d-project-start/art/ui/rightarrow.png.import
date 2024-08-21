@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d256w480erbjs"
-path="res://.godot/imported/rightarrow.png-f718953a07be724bfa86e8044d96f6c8.ctex"
+path="res://.godot/imported/rightarrow.png-c711255e2cc1e7569f70af60a783e35b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/rightarrow.png"
-dest_files=["res://.godot/imported/rightarrow.png-f718953a07be724bfa86e8044d96f6c8.ctex"]
+source_file="res://art/ui/rightarrow.png"
+dest_files=["res://.godot/imported/rightarrow.png-c711255e2cc1e7569f70af60a783e35b.ctex"]
 
 [params]
 
