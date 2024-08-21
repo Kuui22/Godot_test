@@ -294,7 +294,9 @@ texture = ExtResource("2_sj37t")
 24:1/0 = 0
 25:1/0 = 0
 28:1/0 = 0
+28:1/0/z_index = 1
 29:1/0 = 0
+29:1/0/z_index = 1
 2:2/0 = 0
 3:2/0 = 0
 6:2/0 = 0
@@ -312,7 +314,9 @@ texture = ExtResource("2_sj37t")
 24:2/0 = 0
 25:2/0 = 0
 28:2/0 = 0
+28:2/0/z_index = 1
 29:2/0 = 0
+29:2/0/z_index = 1
 2:3/0 = 0
 3:3/0 = 0
 6:3/0 = 0
@@ -330,15 +334,21 @@ texture = ExtResource("2_sj37t")
 24:3/0 = 0
 25:3/0 = 0
 28:3/0 = 0
+28:3/0/z_index = 1
 29:3/0 = 0
+29:3/0/z_index = 1
 6:4/0 = 0
 7:4/0 = 0
 27:4/0 = 0
+27:4/0/z_index = 1
 28:4/0 = 0
+28:4/0/z_index = 1
 28:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 29:4/0 = 0
+29:4/0/z_index = 1
 29:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 30:4/0 = 0
+30:4/0/z_index = 1
 6:5/0 = 0
 7:5/0 = 0
 10:5/0 = 0
@@ -350,11 +360,15 @@ texture = ExtResource("2_sj37t")
 20:5/0 = 0
 21:5/0 = 0
 27:5/0 = 0
+27:5/0/z_index = 1
 28:5/0 = 0
+28:5/0/z_index = 1
 28:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 29:5/0 = 0
+29:5/0/z_index = 1
 29:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 30:5/0 = 0
+30:5/0/z_index = 1
 1:6/0 = 0
 2:6/0 = 0
 3:6/0 = 0
@@ -640,15 +654,13 @@ pattern_0 = SubResource("TileMapPattern_w2iej")
 [node name="Biome1Ground" type="Node2D"]
 script = ExtResource("1_kbjr2")
 
-[node name="GroundMapLayer" type="TileMapLayer" parent="."]
+[node name="Biome1_GroundMapLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 texture_filter = 1
 scale = Vector2(3, 3)
 tile_set = SubResource("TileSet_vht13")
 
-[node name="ObjectMapLayer" type="TileMapLayer" parent="."]
+[node name="Biome1_ObjectMapLayer" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
 scale = Vector2(3, 3)
 tile_set = SubResource("TileSet_v4hmv")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(837, 524)

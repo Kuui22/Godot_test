@@ -86,6 +86,7 @@ PlayerManager="*res://player/player_manager.gd"
 ItemDB="*res://autoload/ItemDatabase.gd"
 MobContainer="*res://mobs/mob_container.gd"
 TreeFunctions="*res://trees/tree_scripts.gd"
+BiomeGenerator="*res://map/biome_generator.tscn"
 
 [display]
 

@@ -48,8 +48,8 @@ func _ready():
 	
 	#objects
 	mob = SLIME
-	TreeFunctions.check_and_generate_trees(player,tree_radius,tree_count,tree_scenes,self)
-	
+	#TreeFunctions.check_and_generate_trees(player,tree_radius,tree_count,tree_scenes,self)
+	BiomeGenerator.generate_biome()
 	
 	
 	#get all current external inventories
