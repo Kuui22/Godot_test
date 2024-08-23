@@ -75,7 +75,18 @@ func generate_biome(biomenumber:int=1):
 			set_ground_tile(position)
 			rand_place_pattern(position)
 
+func place_walls_around_tileset(width: int, height: int):
+	for x in range(-width - 1, width + 2):  # +2 because range is exclusive at the end
+		place_wall(Vector2(x, -height - 1))  # Top edge
+		place_wall(Vector2(x, height + 1))   # Bottom edge
 
+	for y in range(-height, height + 1):
+		place_wall(Vector2(-width - 1, y))  # Left edge
+		place_wall(Vector2(width + 1, y))   # Right edge
+
+func place_wall(position: Vector2):
+	# Replace with your wall placement logic
+	print("Placing wall at: ", position)
 
 
 func set_ground_tile(position: Vector2i):
