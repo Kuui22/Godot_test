@@ -18,4 +18,4 @@ mono_crash.*.json
 
 2d-project-start/addons/
 2d-project-start/demo/
-2d-project-start/textures/
+#2d-project-start/textures/
