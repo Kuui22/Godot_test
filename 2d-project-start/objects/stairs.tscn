@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://kgnt6guc4gxa"]
+
+[ext_resource type="Script" path="res://objects/stairs.gd" id="1_c8pts"]
+[ext_resource type="Texture2D" uid="uid://2ngf2nnx5ua5" path="res://art/stairs.png" id="1_pxrdy"]
+
+[node name="Stairs" type="Node2D"]
+script = ExtResource("1_c8pts")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+texture = ExtResource("1_pxrdy")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-203, -320, -200, 320, -184, 321, -186, -276, 189, -276, 189, 317, 206, 317, 202, -324)
