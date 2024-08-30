@@ -20,6 +20,7 @@ var ground_atlas_coords = []
 var ground_tilemap_layer: TileMapLayer 
 var object_tilemap_layer: TileMapLayer 
 var statue_pattern
+var wall_pattern
 var tileset_ground
 
 var source_id = 0
@@ -65,6 +66,7 @@ func generate_biome(biomenumber:int=1):
 	ground_tilemap_layer= biome_container[biomenumber]["ground_tilemap_layer"]
 	object_tilemap_layer= biome_container[biomenumber]["object_tilemap_layer"]
 	statue_pattern = biome_container[1]["object_tilemap_layer"].tile_set.get_pattern(0)
+	wall_pattern = biome_container[1]["object_tilemap_layer"].tile_set.get_pattern(1)
 	tileset_ground = ground_tilemap_layer.tile_set
 	#get all atlas coordinates of ground
 	get_tileset_size()
@@ -74,6 +76,9 @@ func generate_biome(biomenumber:int=1):
 			var position = Vector2i(x, y)
 			set_ground_tile(position)
 			rand_place_pattern(position)
+
+	place_walls_around_tileset(width,height)
+
 
 func place_walls_around_tileset(width: int, height: int):
 	for x in range(-width - 1, width + 2):  # +2 because range is exclusive at the end
@@ -85,8 +90,7 @@ func place_walls_around_tileset(width: int, height: int):
 		place_wall(Vector2(width + 1, y))   # Right edge
 
 func place_wall(position: Vector2):
-	# Replace with your wall placement logic
-	print("Placing wall at: ", position)
+	object_tilemap_layer.set_pattern(position,wall_pattern)
 
 
 func set_ground_tile(position: Vector2i):

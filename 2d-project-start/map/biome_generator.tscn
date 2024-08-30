@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b01oh6ed32mb8"]
+[gd_scene load_steps=10 format=3 uid="uid://b01oh6ed32mb8"]
 
 [ext_resource type="Texture2D" uid="uid://dd2xgr67cfi76" path="res://textures/biome1/TX Tileset Grass.png" id="1_5yr04"]
 [ext_resource type="Script" path="res://map/biome_generator.gd" id="1_kbjr2"]
@@ -270,6 +270,9 @@ sources/0 = SubResource("TileSetAtlasSource_2s8o3")
 [sub_resource type="TileMapPattern" id="TileMapPattern_w2iej"]
 tile_data = PackedInt32Array(196608, 1769472, 4, 262144, 1769472, 5, 1, 1835008, 1, 65537, 1835008, 2, 131073, 1835008, 3, 196609, 1835008, 4, 262145, 1835008, 5, 2, 1900544, 1, 65538, 1900544, 2, 131074, 1900544, 3, 196610, 1900544, 4, 262146, 1900544, 5, 196611, 1966080, 4, 262147, 1966080, 5)
 
+[sub_resource type="TileMapPattern" id="TileMapPattern_o0jwe"]
+tile_data = PackedInt32Array(0, 131072, 1, 65536, 131072, 2, 131072, 131072, 3, 1, 196608, 1, 65537, 196608, 2, 131073, 196608, 3)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pf1ed"]
 resource_name = "Props"
 texture = ExtResource("2_sj37t")
@@ -278,7 +281,9 @@ texture = ExtResource("2_sj37t")
 24:0/0 = 0
 25:0/0 = 0
 2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 8, 8, 8, -8, -8, -8)
 3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 8, 8, 8, -8, -8, -8)
 6:1/0 = 0
 7:1/0 = 0
 10:1/0 = 0
@@ -298,7 +303,9 @@ texture = ExtResource("2_sj37t")
 29:1/0 = 0
 29:1/0/z_index = 1
 2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 8, 8, 8, -8, -8, -8)
 3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 8, 8, 8, -8, -8, -8)
 6:2/0 = 0
 7:2/0 = 0
 10:2/0 = 0
@@ -318,7 +325,9 @@ texture = ExtResource("2_sj37t")
 29:2/0 = 0
 29:2/0/z_index = 1
 2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 8, 8, 8, -8, -8, -8)
 3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:3/0 = 0
 7:3/0 = 0
 10:3/0 = 0
@@ -650,6 +659,7 @@ physics_layer_0/collision_layer = 4
 physics_layer_0/collision_mask = 5
 sources/0 = SubResource("TileSetAtlasSource_pf1ed")
 pattern_0 = SubResource("TileMapPattern_w2iej")
+pattern_1 = SubResource("TileMapPattern_o0jwe")
 
 [node name="Biome1Ground" type="Node2D"]
 script = ExtResource("1_kbjr2")
