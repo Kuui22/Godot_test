@@ -210,10 +210,13 @@ func set_weapon(weapon_path):
 #TODO: FIX ME LATER
 func updateweapon():
 	currentweapon.damage = statsdict['Attack']
-	if(statsdict['AttackSpeed'] > 0.1):
-		currentweapon.timer.wait_time = statsdict['AttackSpeed']
+	if currentweapon.mode == 'melee':
+		currentweapon.attackspeed = statsdict['AttackSpeed']
 	else:
-		currentweapon.timer.wait_time = 0.1
+		if(statsdict['AttackSpeed'] > 0.1):
+			currentweapon.timer.wait_time = statsdict['AttackSpeed']
+		else:
+			currentweapon.timer.wait_time = 0.1
 	
 
 #playermanager
@@ -223,19 +226,13 @@ func updateweapon():
 func equip(stats:Dictionary) -> void:
 	for key in stats:
 		if statsdict.has(key):
-			if(key == "AttackSpeed"):
-				statsdict[key] -= stats[key]
-			else:
-				statsdict[key] += stats[key]
+			statsdict[key] += stats[key]
 	updateweapon()
 
 func unequip(stats:Dictionary) -> void:
 	for key in stats:
 		if statsdict.has(key):
-			if(key == "AttackSpeed"):
-				statsdict[key] += stats[key]
-			else:
-				statsdict[key] -= stats[key]
+			statsdict[key] -= stats[key]
 	updateweapon()
 
 func valueupdate(value:int) -> void:

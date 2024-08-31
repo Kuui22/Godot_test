@@ -29,6 +29,4 @@ func update_stats_ui(playerstat:Dictionary) -> void:
 		var value = playerstat[key]
 		var currchild = grid_container.get_child(x)
 		currchild.text = key + " : " + str(value)
-		if(key == "AttackSpeed"):
-			currchild.text += "sec"
 		x +=1

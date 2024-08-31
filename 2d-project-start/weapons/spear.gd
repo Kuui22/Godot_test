@@ -1,19 +1,23 @@
 extends Area2D
 
+var mode = 'melee'
+
+
 @onready var static_position: float = rotation
 var reset_speed: float = 2.0
 var damage: int = 1
+var attackspeed: float = 1
 var enemies_in_range
-@onready var timer: Timer = %Timer
 @onready var weapon_pivot: Marker2D = %Weapon_pivot
 @onready var weapon_initial_position: Vector2 = %Weapon_pivot.position  # Initial position of weapon
 @onready var weapon_collision: CollisionShape2D = %Weapon_collision
 var is_attacking: bool = false  # To keep track of attack state
 var thrust_distance: float = 100  # Distance to thrust
-var thrust_time: float = 0.2  # Time to complete the thrust
+var base_thrust_time: float = 0.5  # Time to complete the thrust
 var enemies_hit: Dictionary = {}
 var manual_mode: bool = true
 var tween:Tween
+
 
 
 func _physics_process(delta):
@@ -26,25 +30,27 @@ func _physics_process(delta):
 		if enemies_in_range.size() > 0:
 			var target_enemy = enemies_in_range.front()
 			look_at(target_enemy.global_position)
+			attack()
 		else:
 			reset_position(delta)
 
 func toggle_mode():
 	manual_mode = !manual_mode
 	if manual_mode:
-		timer.stop()  # Stop auto-attacks when in manual mode
+		pass
 	else:
-		timer.start()  # Resume auto-attacks when switching back to auto mode
+		pass
 
 
 
-func reset_position(delta):
-	if not manual_mode and not tween.is_running():
-		if abs(rotation - static_position) < 0.05:
-			rotation = static_position
-		else:
-			rotation = lerp_angle(rotation, static_position, reset_speed * delta)
-		
+func reset_position(delta,tween_call=false):
+	if tween:
+		if not manual_mode and not tween.is_running() and not tween_call:
+			if abs(rotation - static_position) < 0.05:
+				rotation = static_position
+			else:
+				rotation = lerp_angle(rotation, static_position, reset_speed * delta)
+	
 	weapon_pivot.position = weapon_initial_position
 	is_attacking = false
 	weapon_collision.disabled = true
@@ -67,19 +73,18 @@ func attack(is_manual: bool = false):
 		if tween.is_running():
 			tween.stop()
 		
-	var start_pos = weapon_pivot.global_position
-	var end_pos = start_pos + attack_direction * thrust_distance
+	var start_pos = weapon_pivot.position
+	var end_pos = start_pos + (attack_direction * thrust_distance).rotated(-rotation)
+	var thrust_time = base_thrust_time / attackspeed
 	
 	tween = create_tween()
-	tween.tween_property(weapon_pivot, "global_position", end_pos, thrust_time / 2).set_ease(Tween.EASE_OUT)
-	tween.tween_property(weapon_pivot, "global_position", start_pos, thrust_time / 2).set_ease(Tween.EASE_IN)
+	tween.tween_property(weapon_pivot, "position", end_pos, thrust_time / 2).set_ease(Tween.EASE_OUT)
+	tween.tween_property(weapon_pivot, "position", start_pos, thrust_time / 2).set_ease(Tween.EASE_IN)
 	
 	await tween.finished
-	reset_position(thrust_time)
+	reset_position(thrust_time,true)
 	
-func _on_timer_timeout():
-	if not manual_mode and enemies_in_range.size() > 0:
-		attack()
+
 
 
 func _on_weapon_area_body_entered(body: Node2D) -> void:
