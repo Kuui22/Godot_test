@@ -12,48 +12,65 @@ var is_attacking: bool = false  # To keep track of attack state
 var thrust_distance: float = 100  # Distance to thrust
 var thrust_time: float = 0.2  # Time to complete the thrust
 var enemies_hit: Dictionary = {}
+var manual_mode: bool = true
+
+
 
 func _physics_process(delta):
-	enemies_in_range = get_overlapping_bodies()
-	if enemies_in_range.size() > 0:
-		var target_enemy = enemies_in_range.front()
-		look_at(target_enemy.global_position)
+	if manual_mode:
+		look_at(get_global_mouse_position())
 	else:
-		reset_position(delta)
+		enemies_in_range = get_overlapping_bodies()
+		if enemies_in_range.size() > 0:
+			var target_enemy = enemies_in_range.front()
+			look_at(target_enemy.global_position)
+		else:
+			reset_position(delta)
+
+func toggle_mode():
+	manual_mode = !manual_mode
+	if manual_mode:
+		timer.stop()  # Stop auto-attacks when in manual mode
+	else:
+		timer.start()  # Resume auto-attacks when switching back to auto mode
+
+
 
 func reset_position(delta):
 	if abs(rotation - static_position) < 0.05:
 		rotation = static_position
 	else:
 		rotation = lerp_angle(rotation, static_position, reset_speed * delta)
-	weapon_pivot.position = lerp(weapon_pivot.position, weapon_initial_position, delta * reset_speed)
+	weapon_pivot.position = weapon_initial_position
 	is_attacking = false
 	weapon_collision.disabled = true
-	enemies_hit.clear()  # Clear the hit enemies for the next attack
+	enemies_hit.clear()
 
 
-func attack():
+func attack(is_manual: bool = false):
 	if is_attacking:
 		return
 	is_attacking = true
 	weapon_collision.disabled = false
-	enemies_hit.clear()  # Clear the hit enemies for this attack
+	enemies_hit.clear()
+	
+	var attack_direction = Vector2.RIGHT.rotated(rotation)
+	if is_manual:
+		attack_direction = (get_global_mouse_position() - global_position).normalized()
+		rotation = attack_direction.angle()
+	
+	var start_pos = weapon_pivot.position
+	var end_pos = start_pos + attack_direction * thrust_distance
 	
 	var tween = create_tween()
-	tween.tween_property(weapon_pivot, "position", 
-		weapon_initial_position + Vector2(thrust_distance, 0).rotated(rotation), 
-		thrust_time / 2).set_ease(Tween.EASE_OUT)
-	tween.tween_property(weapon_pivot, "position", 
-		weapon_initial_position, 
-		thrust_time / 2).set_ease(Tween.EASE_IN)
+	tween.tween_property(weapon_pivot, "position", end_pos, thrust_time / 2).set_ease(Tween.EASE_OUT)
+	tween.tween_property(weapon_pivot, "position", start_pos, thrust_time / 2).set_ease(Tween.EASE_IN)
 	
 	await tween.finished
 	reset_position(thrust_time)
 	
-	
 func _on_timer_timeout():
-	# Perform the melee attack
-	if enemies_in_range.size() > 0:
+	if not manual_mode and enemies_in_range.size() > 0:
 		attack()
 
 

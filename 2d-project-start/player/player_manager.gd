@@ -92,6 +92,7 @@ func open_menu(menu):
 
 func toggle_auto():
 	player.automode = not player.automode
+	player.currentweapon.toggle_mode()
 	if(player.automode):
 		player.update_target_position()
 

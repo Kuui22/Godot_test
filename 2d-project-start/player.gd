@@ -117,6 +117,7 @@ func _unhandled_input(_event):
 		toggle_inventory.emit()
 	if Input.is_action_just_pressed("interact"):
 		interact()
+		currentweapon.attack(true)
 
 
 #functions for wandering ai
