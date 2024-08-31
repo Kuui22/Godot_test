@@ -13,10 +13,12 @@ var thrust_distance: float = 100  # Distance to thrust
 var thrust_time: float = 0.2  # Time to complete the thrust
 var enemies_hit: Dictionary = {}
 var manual_mode: bool = true
-
+var tween:Tween
 
 
 func _physics_process(delta):
+	if is_attacking:
+		return
 	if manual_mode:
 		look_at(get_global_mouse_position())
 	else:
@@ -37,10 +39,12 @@ func toggle_mode():
 
 
 func reset_position(delta):
-	if abs(rotation - static_position) < 0.05:
-		rotation = static_position
-	else:
-		rotation = lerp_angle(rotation, static_position, reset_speed * delta)
+	if not manual_mode and not tween.is_running():
+		if abs(rotation - static_position) < 0.05:
+			rotation = static_position
+		else:
+			rotation = lerp_angle(rotation, static_position, reset_speed * delta)
+		
 	weapon_pivot.position = weapon_initial_position
 	is_attacking = false
 	weapon_collision.disabled = true
@@ -59,12 +63,16 @@ func attack(is_manual: bool = false):
 		attack_direction = (get_global_mouse_position() - global_position).normalized()
 		rotation = attack_direction.angle()
 	
-	var start_pos = weapon_pivot.position
+	if tween:
+		if tween.is_running():
+			tween.stop()
+		
+	var start_pos = weapon_pivot.global_position
 	var end_pos = start_pos + attack_direction * thrust_distance
 	
-	var tween = create_tween()
-	tween.tween_property(weapon_pivot, "position", end_pos, thrust_time / 2).set_ease(Tween.EASE_OUT)
-	tween.tween_property(weapon_pivot, "position", start_pos, thrust_time / 2).set_ease(Tween.EASE_IN)
+	tween = create_tween()
+	tween.tween_property(weapon_pivot, "global_position", end_pos, thrust_time / 2).set_ease(Tween.EASE_OUT)
+	tween.tween_property(weapon_pivot, "global_position", start_pos, thrust_time / 2).set_ease(Tween.EASE_IN)
 	
 	await tween.finished
 	reset_position(thrust_time)
