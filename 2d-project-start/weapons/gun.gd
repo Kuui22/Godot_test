@@ -5,7 +5,8 @@ var reset_speed:float = 2.0
 var damage:int = 1
 var enemies_in_range
 @onready var timer = %Timer
-
+var mode:String = 'ranged'
+var cooldown:bool = false
 
 func _physics_process(delta):
 	enemies_in_range = get_overlapping_bodies()
@@ -21,7 +22,7 @@ func reset_position(delta):
 		else:
 			rotation = lerp_angle(rotation, static_position, reset_speed*delta)
 			
-func shoot():
+func attack(is_manual: bool = false):
 	const BULLET = preload("res://attacks/bullet.tscn")
 	var new_bullet = BULLET.instantiate()
 	new_bullet.damage = damage
@@ -32,5 +33,5 @@ func shoot():
 
 #if there are enemies shoot
 func _on_timer_timeout():
-	if enemies_in_range.size() > 0:
-		shoot()
+	if enemies_in_range.size() > 0 and not cooldown:
+		attack()

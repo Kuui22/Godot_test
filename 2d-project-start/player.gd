@@ -117,6 +117,7 @@ func _unhandled_input(_event):
 		toggle_inventory.emit()
 	if Input.is_action_just_pressed("interact"):
 		interact()
+	if Input.is_action_pressed("jump"):
 		currentweapon.attack(true)
 
 
@@ -213,10 +214,7 @@ func updateweapon():
 	if currentweapon.mode == 'melee':
 		currentweapon.attackspeed = statsdict['AttackSpeed']
 	else:
-		if(statsdict['AttackSpeed'] > 0.1):
-			currentweapon.timer.wait_time = statsdict['AttackSpeed']
-		else:
-			currentweapon.timer.wait_time = 0.1
+		pass
 	
 
 #playermanager
