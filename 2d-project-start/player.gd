@@ -1,6 +1,6 @@
 extends CharacterBody2D
 @export var happy_boo:Node2D
-@export var weapon:Area2D
+#@export var weapon:Area2D
 signal health_depleted
 signal toggle_inventory()
 
@@ -10,7 +10,7 @@ var interactables = null
 var interacting:bool = false
 
 @onready var healthbar = %HealthBar
-@onready var currentweapon = %Weapon
+@onready var currentweapon:Area2D = null
 
 
 #stats
@@ -67,7 +67,7 @@ var previous_position:Vector2
 
 func _ready():
 	PlayerManager.player = self
-	updateweapon()
+	set_weapon("res://weapons/spear.tscn")
 
 func _physics_process(delta:float):
 	#direction
@@ -77,7 +77,8 @@ func _physics_process(delta:float):
 		state = "MOVING"
 	else:#check for enemies
 		if(automode):
-			enemies_in_range = weapon.get_overlapping_bodies()
+			if(currentweapon):
+				enemies_in_range = currentweapon.get_overlapping_bodies()
 			if enemies_in_range.size() > 0:#there are enemies
 				state = "FIGHT"
 				fight_ai(delta)
@@ -187,6 +188,23 @@ func get_drop_position() -> Vector2:
 
 func collect(_item):
 	pass
+
+func set_weapon(weapon_path):
+# Remove current weapon if exists
+	if currentweapon:
+		currentweapon.queue_free()
+
+	# Load and instance the new weapon
+	var weapon_scene:PackedScene = load(weapon_path)
+	if weapon_scene:
+		currentweapon = weapon_scene.instantiate() as Area2D
+		add_child(currentweapon)
+
+		# Optionally position the weapon relative to the player
+		currentweapon.position = Vector2(-10,0)  # Adjust this as needed
+
+	updateweapon()
+
 
 #TODO: FIX ME LATER
 func updateweapon():

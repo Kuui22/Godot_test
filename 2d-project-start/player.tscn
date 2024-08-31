@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://ccqvp7v3wrfu6"]
+[gd_scene load_steps=8 format=3 uid="uid://ccqvp7v3wrfu6"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_pg2w0"]
 [ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="1_qo1h0"]
-[ext_resource type="PackedScene" uid="uid://dg3a7vrvj7d0l" path="res://weapons/gun.tscn" id="3_rdkbn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qfsau"]
 radius = 30.034
@@ -19,12 +18,11 @@ bg_color = Color(0.927034, 0.413118, 0.428731, 1)
 [sub_resource type="CircleShape2D" id="CircleShape2D_7b4or"]
 radius = 148.165
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("happy_boo", "weapon") groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("happy_boo") groups=["player"]]
 collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_pg2w0")
 happy_boo = NodePath("HappyBoo")
-weapon = NodePath("Weapon")
 
 [node name="HappyBoo" parent="." instance=ExtResource("1_qo1h0")]
 scale = Vector2(0.7, 0.7)
@@ -36,11 +34,6 @@ shape = SubResource("CircleShape2D_qfsau")
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_speed = 1.0
 rotation_smoothing_speed = 1.0
-
-[node name="Weapon" parent="." instance=ExtResource("3_rdkbn")]
-unique_name_in_owner = true
-position = Vector2(0, -27)
-scale = Vector2(0.7, 0.7)
 
 [node name="HurtBox" type="Area2D" parent="."]
 unique_name_in_owner = true

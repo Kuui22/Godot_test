@@ -24,11 +24,11 @@ autostart = true
 [node name="Weapon_pivot" type="Marker2D" parent="."]
 unique_name_in_owner = true
 
-[node name="Area2D" type="Area2D" parent="Weapon_pivot"]
+[node name="Weapon_area" type="Area2D" parent="Weapon_pivot"]
 collision_layer = 0
 collision_mask = 2
 
-[node name="Weapon_collision" type="CollisionShape2D" parent="Weapon_pivot/Area2D"]
+[node name="Weapon_collision" type="CollisionShape2D" parent="Weapon_pivot/Weapon_area"]
 unique_name_in_owner = true
 position = Vector2(197, -1.5)
 shape = SubResource("RectangleShape2D_4aaj7")
@@ -39,3 +39,4 @@ position = Vector2(150, 0)
 texture = ExtResource("2_t3j2r")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Weapon_pivot/Weapon_area" to="." method="_on_weapon_area_body_entered"]
